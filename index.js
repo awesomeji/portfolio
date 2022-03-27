@@ -26,16 +26,11 @@ app.get('/', (req, res) => {
     res.send('Hello express, node, nodemon, mongoDB, mongoose, postman, git, github and react.js');
 });
 
-//when http request is made to '/api/users/register' as POST method,
 app.post('/api/users/register', (req, res) => {
-    // parse the request body(with bodyparser) and create a new user object(with User model we made before)
-   
+ 
     const user = new User(req.body);
     user.save((err, doc) => {
-        // if something goes wrong retrun error
-        // maybe request data wrong or connection error
         if (err) return res.json({ success: false, error:err });
-        // if everything goes well, return success and show the user data 
         return res.status(200).json({
             success: true,
             userData: doc
