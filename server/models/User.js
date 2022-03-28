@@ -15,13 +15,13 @@ const validator = require('validator'); //validate email
 const userSchema = new mongoose.Schema({
 name: {
     type: String,
-    maxlength: 50,
     required: true,
+    maxlength: 50,
 },
 id: {
     type: String,
-    maxlength: 50,
     required: true,
+    maxlength: 50,
     trim: true,
     unique: 1,
 },
@@ -37,7 +37,6 @@ email: {
 },
 password: {
     type: String,
-
     required: true,
 
     validate: [
