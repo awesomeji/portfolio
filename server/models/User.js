@@ -7,7 +7,7 @@ var moment = require('moment');//get local time
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");
  
-const date = moment().format('YYYY-MM-DD HH:mm:ss');
+const date = moment().format('YYYY-MM-DD HH:mm:ss'+' KST');
 
 const validator = require('validator'); //validate email
 
@@ -63,8 +63,12 @@ tokenExp: {
     type: Number
 },
 register_date: {
-    type: Date,
+    type: String,
     default: date
+    },
+member_profile: {
+    type: String,
+    //for 
 }
 });
 
