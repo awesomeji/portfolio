@@ -7,7 +7,7 @@ var moment = require('moment');//get local time
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");
  
-const date = moment().format('YYYY-MM-DD HH:mm:ss'+' KST');
+const date = moment().format('YYYY-MM-DD HH:mm:ss'  );
 
 const validator = require('validator'); //validate email
 
@@ -18,7 +18,7 @@ name: {
     required: true,
     maxlength: 50,
 },
-id: {
+userid: {
     type: String,
     required: true,
     maxlength: 50,
@@ -96,10 +96,8 @@ userSchema.pre('save', function (next) {
     }
     
 });
-
-
-
 const User = mongoose.model('User', userSchema);
 
-module.exports = { User };
+module.exports = {User}
+
 
