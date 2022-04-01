@@ -5,7 +5,7 @@ const passport = require('passport');
 require('dotenv').config(); //.env file is should be in root directory
 
 
-const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME } = process.env;
+const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 const bcrypt = require('bcrypt');
 
 const { User } = require('../../models/User'); 
@@ -53,6 +53,9 @@ router.post('/login', (req, res) => {
                             regi_date: user.register_date,
                             role: user.role
                         };
+                        const refreshpayload = {
+                            id: user.id
+                        }
                         //generate Access token
                         jwt.sign(payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, token) => {
             
@@ -64,6 +67,9 @@ router.post('/login', (req, res) => {
                                 
                             })
                         });
+                        // jwt.sign(refreshpayload, JWT_REFRESH_SECRET, { expiresIN: JWT_REFRESH_EXPIRATION_TIME }, (err, token) => {
+
+                        // });
                     } else {
                         return res.json({ loginSuccess: false, message: "Wrong password" });
                     }
