@@ -1,16 +1,18 @@
 const mongoose = require('mongoose');
-
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const bcrypt = require('bcrypt');//encrypt password
 const saltRounds = 10;
-
+const passport = require('passport');
 var moment = require('moment');//get local time
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");
  
-const date = moment().format('YYYY-MM-DD HH:mm:ss'  );
+const date = moment().format('YYYY-MM-DD HH:mm:ss');
 
 const validator = require('validator'); //validate email
 
+const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 
 const userSchema = new mongoose.Schema({
 name: {
@@ -96,6 +98,22 @@ userSchema.pre('save', function (next) {
     }
     
 });
+
+userSchema.statics.saveRefreshToken = function ( refreshToken, cb) { 
+   
+    console.log(refreshToken);
+    if (refreshToken) {
+        // console.log(refreshPayload);
+        const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
+        console.log(decoded.id);
+        console.log(decoded.exp);
+        User.findOne({ _id: decoded.id }, function (err, user) {
+
+            console.log(user);
+        });
+        // User.findOneAndUpdate({ _id: decoded.id }, { $set: { token: refreshToken, tokenExp: decoded.exp } }, { new: true }, function (err, user) { });
+    }
+}
 const User = mongoose.model('User', userSchema);
 
 module.exports = {User}

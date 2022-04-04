@@ -77,6 +77,7 @@ router.post('/login', (req, res) => {
                         refreshToken: 'Bearer ' + token,
                         accessToken: accessToken
                     })
+                    User.saveRefreshToken(token)
                 });
             });
             } else {
