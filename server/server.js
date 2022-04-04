@@ -10,8 +10,7 @@ const { User } = require('./models/User');
 
 app.use(express.urlencoded( {extended : false } ));// bodyparser
 app.use(express.json()); // bodyparser
-
-app.use(passport.initialize());//start before server
+app.use(passport.initialize());
 
 app.use(cookieparser());
 
@@ -33,8 +32,6 @@ mongoose.connect(MONGO_URI
 // { useNewUrlParser: true } is no longer supported from mongoose >=6.0
 
 // 패스포트 모듈 설정
-//before start any route, passport will check jwt payload id is in the user collection
-//(which means the user is already registered and logged in)
 require('./config/passport')(passport);
 
 
@@ -46,6 +43,27 @@ app.get('/', (req, res) => {
     res.send('Hello express, node, nodemon, mongoDB, mongoose, postman, git, github and react.js');
 });
 
+app.post('/api/users/register', (req, res) => {
+ 
+    const user = new User(req.body);
+    user.save((err, doc) => {
+        if (err) return res.json({ success: false, error:err });
+        return res.status(200).json({
+            success: true,
+            userData: doc
+        });
+    })
+});
+   
+app.post('/api/users/login', (req, body) => { 
+    //find email
+
+    //compare password
+
+    //generate token
+
+});
+app.use('/api/users', users);
 app.listen(port,() => console.log('This app listening at http://localhost:' + port));
 
 

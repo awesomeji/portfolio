@@ -1,13 +1,23 @@
 require('dotenv').config();
+
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
+const res = require('express/lib/response');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
+const cookieExtractor = req => {
+    let jwt = null 
 
+    if (req && req.cookies) {
+        jwt = req.cookies['accessToken']
+    }
+
+    return jwt
+}
 const opts = {};
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.jwtFromRequest = cookieExtractor;
 opts.secretOrKey = process.env.JWT_ACCESS_SECRET
 
 module.exports = passport => {
@@ -20,8 +30,9 @@ module.exports = passport => {
     //done passes the error(which means it's not over) and the user to the next middleware
     // if the user is not found, call done with error and false
     
-    passport.use(new JwtStrategy(opts, (jwt_payload, done) =>{
-     
+    passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+        
+       console.log(jwt_payload ? jwt_payload.id : 'no payload');
         User.findById(jwt_payload.id)
             .then(user => {
                 if(user) {

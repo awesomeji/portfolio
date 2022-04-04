@@ -81,7 +81,7 @@ userSchema.pre('save', function (next) {
 
     var user = this;
 
-    console.log(user);
+    // console.log(user);
     if (user.isModified('password')) {
 
         bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -101,15 +101,15 @@ userSchema.pre('save', function (next) {
 
 userSchema.statics.saveRefreshToken = function ( refreshToken, cb) { 
    
-    console.log(refreshToken);
+    // console.log(refreshToken);
     if (refreshToken) {
         // console.log(refreshPayload);
         const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
-        console.log(decoded.id);
-        console.log(decoded.exp);
+        // console.log(decoded.id);
+        // console.log(decoded.exp);
         User.findOne({ _id: decoded.id }, function (err, user) {
 
-            console.log(user);
+            // console.log(user);
         });
         // User.findOneAndUpdate({ _id: decoded.id }, { $set: { token: refreshToken, tokenExp: decoded.exp } }, { new: true }, function (err, user) { });
     }
