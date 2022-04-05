@@ -7,20 +7,25 @@ const res = require('express/lib/response');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
-const cookieExtractor = req => {
+
+
+module.exports = passport => {
+    const cookieExtractor = req => {
     let jwt = null 
 
     if (req && req.cookies) {
-        jwt = req.cookies['accessToken']
+        accessToken = req.cookies['accessToken'];
+        refreshToken = req.cookies['refreshToken'];
+            console.log(accessToken);
+            console.log(refreshToken);
+            jwt = req.cookies['accessToken']
+        }
+
+        return jwt
     }
-
-    return jwt
-}
-const opts = {};
-opts.jwtFromRequest = cookieExtractor;
-opts.secretOrKey = process.env.JWT_ACCESS_SECRET
-
-module.exports = passport => {
+    const opts = {};
+    opts.jwtFromRequest = cookieExtractor;
+    opts.secretOrKey = process.env.JWT_ACCESS_SECRET
     //jwtFromRequest extracts the token from the request
     //secretOrKey is the secret key used to sign the token
     //JwtStrategy passes the decoded token to the done function
@@ -32,7 +37,7 @@ module.exports = passport => {
     
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
         
-       console.log(jwt_payload ? jwt_payload.id : 'no payload');
+    //    console.log(jwt_payload);
         User.findById(jwt_payload.id)
             .then(user => {
                 if(user) {
@@ -46,3 +51,5 @@ module.exports = passport => {
             );
     }));
 };
+
+

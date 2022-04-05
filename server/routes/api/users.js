@@ -70,8 +70,8 @@ router.post('/login', (req, res) => {
                
                 jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, token) => {
                     //note that maxAge is in milliseconds
-                    res.cookie('accessToken', accessT, { httpOnly: true, maxAge: 1000 * 10})//secure :true
-                    res.cookie('refreshToken', token, { httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 14 })
+                    res.cookie('accessToken', accessT, { httpOnly: true})//secure :true
+                    res.cookie('refreshToken', token, { httpOnly: true })
                     res.json({
                         success: true,
                         refreshToken: 'Bearer ' + token,
