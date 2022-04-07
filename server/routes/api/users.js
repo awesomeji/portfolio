@@ -61,25 +61,25 @@ router.post('/login', (req, res) => {
             const refreshPayload = {
                 id: user.id
             }
-            //generate Access token
-            jwt.sign(accessPayload, JWT_ACCESS_SECRET, { expiresIn:  JWT_ACCESS_EXPIRATION_TIME}, (err, token) => {
-                
-                //how do i console.log exp in jwt.sign
-                const accessToken = 'Bearer ' + token
-                const accessT = token
-               
-                jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, token) => {
-                    //note that maxAge is in milliseconds
-                    res.cookie('accessToken', accessT, { httpOnly: true})//secure :true
-                    res.cookie('refreshToken', token, { httpOnly: true })
-                    res.json({
-                        success: true,
-                        refreshToken: 'Bearer ' + token,
-                        accessToken: accessToken
-                    })
-                    User.saveRefreshToken(token)
-                });
-            });
+                 jwt.sign(accessPayload, JWT_ACCESS_SECRET, { expiresIn:  JWT_ACCESS_EXPIRATION_TIME}, (err, token) => {
+        
+     
+        const accessToken = 'Bearer ' + token
+        const accessT = token
+       
+            jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshT) => {
+            //note that maxAge is in milliseconds
+            res.cookie('accessToken', accessT, { httpOnly: true})//secure :true
+            res.cookie('refreshToken', refreshT, { httpOnly: true })
+            res.json({
+                success: true,
+                refreshToken: 'Bearer ' + refreshT,
+                accessToken: accessToken
+            })
+                User.saveRefreshToken(refreshT)
+                //이거 모듈화 왜앙돼
+        });
+    });
             } else {
                 return res.json({ loginSuccess: false, message: "Wrong password" });
             }

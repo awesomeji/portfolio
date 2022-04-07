@@ -11,6 +11,7 @@ moment.tz.setDefault("Asia/Seoul");
 const date = moment().format('YYYY-MM-DD HH:mm:ss');
 
 const validator = require('validator'); //validate email
+const { json } = require('express/lib/response');
 
 const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 
@@ -107,13 +108,22 @@ userSchema.statics.saveRefreshToken = function ( refreshToken, cb) {
         const decoded = jwt.verify(refreshToken, JWT_REFRESH_SECRET);
         // console.log(decoded.id);
         // console.log(decoded.exp);
-        User.findOne({ _id: decoded.id }, function (err, user) {
-
-            // console.log(user);
+        User.findOneAndUpdate({ _id: decoded.id }, { $set: { token: refreshToken, tokenExp: decoded.exp } }, { new: true }, function (err, user) {
+           
+            if (err) return new Error(err);
+            if (!user) return json.res(
+                {
+                    message: '유저가 존재하지 않습니다.'
+                }
+            );
+            return true;
         });
-        // User.findOneAndUpdate({ _id: decoded.id }, { $set: { token: refreshToken, tokenExp: decoded.exp } }, { new: true }, function (err, user) { });
+        
     }
 }
+
+
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = {User}
