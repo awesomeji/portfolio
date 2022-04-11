@@ -51,10 +51,7 @@ router.post('/login', (req, res) => {
             if (isMatch) {
             const accessPayload = {
                 id: user.id,
-                name: user.name,
                 userid: user.userid,
-                email: user.email,
-                regi_date: user.register_date,
                 role: user.role
             };
             // console.log(accessPayload.id);
