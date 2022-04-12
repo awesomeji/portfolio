@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
-const res = require('express/lib/response');
+// const res = require('express/lib/response');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
@@ -12,70 +12,53 @@ const {verifyToken} = require('../utils/jwt');
 const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 
 
-function isExpired(token) { 
-    const decoded = jwt.decode(token, { complete: true });
-    if(!decoded) {
-        return new Error('Invalid token');
-    }
-    const currentTime = Date.now() / 1000;
+// function isExpired(token) { 
+//     const decoded = jwt.decode(token, { complete: true });
+//     if(!decoded) {
+//         return new Error('Invalid token');
+//     }
+//     const currentTime = Date.now() / 1000;
   
-    if(decoded.payload.exp < currentTime) {
-        return true;
-    }
-    return false;
-}
+//     if(decoded.payload.exp < currentTime) {
+//         return true;
+//     }
+//     return false;
+// }
 
 
 
-const cookieExtractor = (req,res,next) => {
+async function cookieExtractor  (req,res)  {
         let jwtoken = null
-        if (req && req.cookies) {
+    if (req && req.cookies) {
+            // console.log(req)
+            console.log(res)
             accessToken = req.cookies['accessToken'];
             refreshToken = req.cookies['refreshToken'];
-            
-            // in case of access is expired and refresh is still valid
-           if (isExpired(accessToken) && !isExpired(refreshToken)) {
-                console.log('you need to get new access token');
-       
-                    User.findOne({ token: refreshToken })
-                    .then(user => { 
-                        //if refresh token is wrong
-                    
-                        // or is valid
-                        // issue access and refresh token both
-                        const Payload = {
-                        id: user.id,
-                        name: user.name,
-                        userid: user.userid,
-                        email: user.email,
-                        regi_date: user.register_date,
-                        role: user.role
-                        };
-                        // console.log(Payload);
-                        // console.log(JWT_ACCESS_SECRET);
-                        jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, token) => {
-                            const accessToken = token;
-                            
-                            console.log('accessToken'+accessToken);
-                            res.cookie('accessToken', accessToken, { httpOnly: true })
-                            req.cookies.accessToken = accessToken;
-                            // next();
-
-                            jwtoken = accessToken;
-                            return jwtoken;
-                           
-                        })
-
-                    })
-                    .catch(err => console.log(err));
-                    
-                }
-                //왜앙돼
-                // console.log(refreshToken);
-            jwtoken = req.cookies['accessToken']
-     
-          
-        }
+            jwtoken = accessToken;
+            if (!verifyToken('access', accessToken)) {
+                // in case of access is expired and refresh is still valid
+                if (verifyToken('refresh', refreshToken)) {
+                    console.log('you need to get new access token');
+                await  User.findOne({ token: refreshToken })
+                    .then(user => {
+                        
+                                const Payload = {
+                                    id: user.id,
+                                    userid: user.userid,
+                                    role: user.role
+                                }
+                                 console.log(Payload);
+                                jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, token) => {
+                                    const accessToken = token;
+                                    res.cookie('accessToken', accessToken, { httpOnly: true })
+                                })
+                                jwtoken = accessToken;
+                            })
+                            .catch(err => console.log(err));
+                } else { }
+            }
+            }
+            console.log('jwtoken : '+jwtoken);
         return jwtoken
 
     }
