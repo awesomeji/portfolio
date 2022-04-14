@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
+const custom = require('../../config/custom');
 require('dotenv').config(); //.env file is should be in root directory
 const { auth } = require("../../middleware/auth");
 
@@ -85,11 +86,12 @@ router.post('/login', (req, res) => {
 
 });
 
-router.get('/current',passport.authenticate('jwt', { session: false }), (req, res) => { 
+router.get('/current',passport.authenticate('custom', { session: false }), (req, res) => { 
     res.json({
+        id : req.user.id,
         userid: req.user.userid,
-        email: req.user.email,
-        name: req.user.name,
+        role : req.user.role
+        
         // id: req.user.id,
     });
 })

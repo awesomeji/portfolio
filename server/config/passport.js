@@ -1,7 +1,11 @@
 require('dotenv').config();
 
+const { auth } = require('../middleware/auth');
+const { append } = require('express/lib/response');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const passportCustom = require('passport-custom');
+const CustomStrategy = passportCustom.Strategy;
 // const res = require('express/lib/response');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
@@ -11,55 +15,57 @@ const {verifyToken} = require('../utils/jwt');
 
 const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 
+const cookieExtractor = (req,res) => { 
 
-// function isExpired(token) { 
-//     const decoded = jwt.decode(token, { complete: true });
-//     if(!decoded) {
-//         return new Error('Invalid token');
-//     }
-//     const currentTime = Date.now() / 1000;
-  
-//     if(decoded.payload.exp < currentTime) {
-//         return true;
-//     }
-//     return false;
-// }
-
-
-
-async function cookieExtractor  (req,res)  {
-        let jwtoken = null
-    if (req && req.cookies) {
-            // console.log(req)
-            console.log(res)
-            accessToken = req.cookies['accessToken'];
-            refreshToken = req.cookies['refreshToken'];
-            jwtoken = accessToken;
-            if (!verifyToken('access', accessToken)) {
-                // in case of access is expired and refresh is still valid
-                if (verifyToken('refresh', refreshToken)) {
-                    console.log('you need to get new access token');
-                await  User.findOne({ token: refreshToken })
-                    .then(user => {
-                        
-                                const Payload = {
-                                    id: user.id,
-                                    userid: user.userid,
-                                    role: user.role
-                                }
-                                 console.log(Payload);
-                                jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, token) => {
-                                    const accessToken = token;
-                                    res.cookie('accessToken', accessToken, { httpOnly: true })
-                                })
-                                jwtoken = accessToken;
-                            })
-                            .catch(err => console.log(err));
-                } else { }
-            }
-            }
-            console.log('jwtoken : '+jwtoken);
+    let jwtoken = null
+    if (req && req.cookies['accessToken']&&req.cookies['refreshToken']) {
+        // console.log(req)
+      
+        jwtoken = req.cookies['accessToken'];
+    }
+    return jwtoken   
+}
+const tokenCheck = (req,res) => {
+    let jwtoken = null
+        //when both token are valid
+    if (req && verifyToken('access', req.cookies['accessToken'])
+        && verifyToken('refresh', req.cookies['refreshToken'])) {
+   
+       
+        accessToken = req.cookies['accessToken'];
+        jwtoken = accessToken;
+        console.log('jwtoken : '+ jwtoken);
         return jwtoken
+        
+        //when only refresh token is valid
+        //issue new access token
+    } else if (req && !verifyToken('access', req.cookies['accessToken'])
+        && verifyToken('refresh', req.cookies['refreshToken'])) { 
+        console.log('you need new access token')
+
+        const refreshTokenInfo = verifyToken('refresh',req.cookies['refreshToken']);
+         User.findById({ _id: refreshTokenInfo.id }, (err, user) => {
+                const Payload = {
+                id: user.id,
+                userid: user.userid,
+                role: user.role
+                }
+                jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => { 
+                    if (err) {
+                            console.log(err)
+                    }
+                    console.log(res)
+                    console.log('new accesstoken : ' + accessToken)
+                    res.cookie('accessToken', accessToken,{ httpOnly: true});
+                    jwtoken = accessToken;
+                });
+                return  jwtoken
+            }) 
+            
+    }
+    console.log('where am i')
+    return null
+    
 
     }
 
@@ -67,24 +73,18 @@ async function cookieExtractor  (req,res)  {
 
 module.exports = passport => {
 
-   
-    
-
     const opts = {};
-    opts.jwtFromRequest = cookieExtractor;
+    opts.jwtFromRequest =  tokenCheck;
     opts.secretOrKey = JWT_ACCESS_SECRET
-    //jwtFromRequest extracts the token from the request
-    //secretOrKey is the secret key used to sign the token
-    //JwtStrategy passes the decoded token to the done function
-    //done is a callback function that is called when the token is successfully decoded
-    // in done function, find the user in DB with the id in the decoded token(jwt payload)
-    // if the user is found, call done with null and the user object
-    //done passes the error(which means it's not over) and the user to the next middleware
-    // if the user is not found, call done with error and false
+    opts.passReqToCallback = true;
     
-    passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+    passport.use(new JwtStrategy(opts,(req,jwt_payload, done) => {
+        // console.log(passport);
+       
         
-    //    console.log(jwt_payload);
+
+        console.log(req)
+      console.log(jwt_payload);
         User.findById(jwt_payload.id)
             .then(user => {
                 if(user) {
@@ -100,3 +100,60 @@ module.exports = passport => {
 };
 
 
+
+module.exports = custom => {
+
+ 
+    
+    custom.use('custom', new CustomStrategy(
+        function (req, done) {
+          
+            const accessToken = req.cookies['accessToken'];
+            const refreshToken = req.cookies['refreshToken'];
+                //when both token are valid
+            if (req && verifyToken('access', accessToken)
+                && verifyToken('refresh', refreshToken)) {
+                
+                const verifyAccessToken = verifyToken('access', accessToken);
+
+              
+                const user = {
+                    id: verifyAccessToken.id,
+                    userid: verifyAccessToken.userid,
+                    role: verifyAccessToken.role
+                };
+                
+                console.log(user)
+                return done(null, user);
+            }
+            // when refresth token is valid but access token expired
+            else if (req && !verifyToken('access', accessToken)
+                && verifyToken('refresh', refreshToken)) {
+                console.log('you need new access token')
+                const refreshTokenInfo = verifyToken('refresh', refreshToken);
+                User.findById({ _id: refreshTokenInfo.id }, (err, user) => {
+                    const Payload = {
+                        id: user.id,
+                        userid: user.userid,
+                        role: user.role
+                    }
+                    console.log('old access token : ' +req.cookies['accessToken'])
+                    jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => {
+                        if (err) {
+                            console.log(err)
+                        }
+                        
+                        console.log('new accesstoken : ' + accessToken)
+                     
+                    });
+                     return done(null, true)
+                })
+                return done(null, true)
+            }
+        
+    
+        }
+    )
+    )
+
+    }

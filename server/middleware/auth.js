@@ -1,9 +1,14 @@
+const { JsonWebTokenError } = require('jsonwebtoken');
 const { User } = require('../models/User');
 
 let auth = (req, res, next) => {
-    let token = req.cookies.accessToken;
-    console.log(token);
-
+    console.log(res)
+    console.log(req)
+    const token = req
+    res.cookie('accessToken', token, { httpOnly: true });
+    
+    next();
+    
 //   User.findByToken(token, (err, user) => {
 //     if (err) throw err;
 //     if (!user)
