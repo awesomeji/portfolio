@@ -63,15 +63,11 @@ router.post('/login', (req, res) => {
         
      
         const accessToken = 'Bearer ' + token
-        const accessT = token
-       
             jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshT) => {
             //note that maxAge is in milliseconds
-            res.cookie('accessToken', accessT, { httpOnly: true})//secure :true
             res.cookie('refreshToken', refreshT, { httpOnly: true })
             res.json({
                 success: true,
-                refreshToken: 'Bearer ' + refreshT,
                 accessToken: accessToken
             })
                 User.saveRefreshToken(refreshT)
@@ -86,11 +82,16 @@ router.post('/login', (req, res) => {
 
 });
 
-router.get('/current',passport.authenticate('custom', { session: false }), (req, res) => { 
+router.get('/current', passport.authenticate('custom', { session: false }), (req, res) => { 
+    // console.log(req)
     res.json({
+        
         id : req.user.id,
         userid: req.user.userid,
-        role : req.user.role
+        role: req.user.role,
+        accessToken: req.user.accessToken,
+        refreshToken: req.user.refreshToken
+        
         
         // id: req.user.id,
     });
