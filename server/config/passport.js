@@ -16,49 +16,6 @@ const { refreshToken } =require('../middleware/refreshToken');
 
 const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 
-const tokenCheck = (req,res) => {
-    let jwtoken = null
-        //when both token are valid
-    if (req && verifyToken('access', req.cookies['accessToken'])
-        && verifyToken('refresh', req.cookies['refreshToken'])) {
-   
-       
-        accessToken = req.cookies['accessToken'];
-        jwtoken = accessToken;
-        console.log('jwtoken : '+ jwtoken);
-        return jwtoken
-        
-        //when only refresh token is valid
-        //issue new access token
-    } else if (req && !verifyToken('access', req.cookies['accessToken'])
-        && verifyToken('refresh', req.cookies['refreshToken'])) { 
-        console.log('you need new access token')
-
-        const refreshTokenInfo = verifyToken('refresh',req.cookies['refreshToken']);
-         User.findById({ _id: refreshTokenInfo.id }, (err, user) => {
-                const Payload = {
-                id: user.id,
-                userid: user.userid,
-                role: user.role
-                }
-                jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => { 
-                    if (err) {
-                            console.log(err)
-                    }
-                
-                    console.log('new accesstoken : ' + accessToken)
-                    res.cookie('accessToken', accessToken,{ httpOnly: true});
-                    jwtoken = accessToken;
-                });
-                return  jwtoken
-            }) 
-            
-    }
-    console.log('where am i')
-    return null
-    
-
-    }
 
 
 
@@ -117,27 +74,24 @@ module.exports = custom => {
                     userid: user.userid,
                     role: user.role
                 }
+                const userInfo = user.toObject()
+                userInfo.id = user.id.toString()
+                jwt.sign({ id: Payload.id }, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshToken) => { 
+                    if (err) {
+                            console.log(err)
+                    }
+                    userInfo.refreshToken = refreshToken
+                    User.saveRefreshToken(refreshToken)
+                    
+                })
                 jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => {
-                   
+                    
                     console.log('new accesstoken : ' + accessToken)
-
-                    User.findById(Payload.id)
-                        .then(user => {
-                            if (user) {
-                                const userInfo = user.toObject()
-                                jwt.sign({ id: user.id }, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshToken) => {
-                                    if (err) {
-                                    console.log(err)
-                                    }
-                                    console.log('refreshToken : '+refreshToken)
-                                    userInfo.refreshToken = refreshToken
-                                })
-                                console.log(userInfo)
-                                userInfo.accessToken = accessToken
-                                return done(null, userInfo)
-                            }
-                            return done(null, false);
-                        })
+                    
+                    userInfo.accessToken = accessToken
+                   
+                    
+                    return done(null, userInfo)
                 })
             })
         } else { 
@@ -161,8 +115,20 @@ module.exports = custom => {
                     return done(null, false);
                 })
                 .catch(err => console.log(err));
-         } else { 
-            console.log('how about this case??')
+        } else { 
+            console.log('your access token is still valid, but your refresh token is expired')
+            User.findById(isAccessValid.id)
+                .then(user => { 
+                    jwt.sign({ id: user.id }, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshToken) => {
+                        if (err) {
+                            console.log(err)
+                        }
+                        user.id = user.id.toString()
+                        user.refreshToken = refreshToken
+                        User.saveRefreshToken(refreshToken)
+                        return done(null, user)
+                      }
+                )})
         }
     }
         
@@ -170,46 +136,3 @@ module.exports = custom => {
     
 }))}
 
-         // const accessToken = req.cookies['accessToken'];
-         // const refreshToken = req.cookies['refreshToken'];
-         //     //when both token are valid
-         // if (req && verifyToken('access', accessToken)
-         //     && verifyToken('refresh', refreshToken)) {
-             
-         //     const verifyAccessToken = verifyToken('access', accessToken);
-
-           
-         //     const user = {
-         //         id: verifyAccessToken.id,
-         //         userid: verifyAccessToken.userid,
-         //         role: verifyAccessToken.role
-         //     };
-             
-         //     console.log(user)
-         //     return done(null, user);
-         // }
-         // // when refresth token is valid but access token expired
-         // else if (req && !verifyToken('access', accessToken)
-         //     && verifyToken('refresh', refreshToken)) {
-         //     console.log('you need new access token')
-         //     const refreshTokenInfo = verifyToken('refresh', refreshToken);
-         //     User.findById({ _id: refreshTokenInfo.id }, (err, user) => {
-         //         const Payload = {
-         //             id: user.id,
-         //             userid: user.userid,
-         //             role: user.role
-         //         }
-         //         console.log('old access token : ' +req.cookies['accessToken'])
-         //         jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => {
-         //             if (err) {
-         //                 console.log(err)
-         //             }
-                     
-         //             console.log('new accesstoken : ' + accessToken)
-                  
-         //         });
-         //          return done(null, true)
-         //     })
-         //     return done(null, true)
-         // }
-     

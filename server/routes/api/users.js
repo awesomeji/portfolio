@@ -11,16 +11,38 @@ const bcrypt = require('bcrypt');
 
 const { User } = require('../../models/User'); 
 const res = require('express/lib/response');
+const { redirect, append } = require('express/lib/response');
 
 router.get('/', (req, res) => {
     console.log('router')
     res.send("패스포트 모듈 테스트");
 
 });
+router.get('/auth', passport.authenticate('custom', { session: false }), (req, res) => { 
+    
+    if (!req.user) { 
+         return res.json({
+        isAuth: false,
+        error: true
+      });
+    }
+    if (req.user.refreshToken) { 
+        res.cookie('refreshToken', req.user.refreshToken, { httpOnly: true })
+    }
+    res.json({
+        
+        id : req.user.id,
+        userid: req.user.userid,
+        role: req.user.role,
+        accessToken: req.user.accessToken,
+        refreshToken: req.user.refreshToken
+        
+        
+        // id: req.user.id,
+    });
+})
 
-router.get('/auth', (req, res) => {
 
-});
 router.post('/register', (req, res) => {
  
     const user = new User(req.body);
@@ -82,19 +104,14 @@ router.post('/login', (req, res) => {
 
 });
 
-router.get('/current', passport.authenticate('custom', { session: false }), (req, res) => { 
-    // console.log(req)
-    res.json({
-        
-        id : req.user.id,
-        userid: req.user.userid,
-        role: req.user.role,
-        accessToken: req.user.accessToken,
-        refreshToken: req.user.refreshToken
-        
-        
-        // id: req.user.id,
-    });
+router.get('/logout', (req, res) => { 
+    User.findOneAndUpdate({ id : req.id }, { token : null, tokenExp : null }, (err, doc) => { 
+        if (err) return res.json({ success: false, error: err });
+        return res.status(200).json({
+            success: true
+        });
+    })
+    res.cookie('refreshToken', '', { httpOnly: true })
 })
 
 
