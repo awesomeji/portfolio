@@ -4,10 +4,11 @@ import About from './components/About/About'
 function App() {
     const [count, setCount] = useState(0)
     return (
-    
+        
         <Routes>
-            <Route path='/' element={ <Home />} />
-            <Route path='about' element={ <About />} />
+            <Route path='*' element={ <div>hillowhillow</div>} />
+            <Route path='/about' element={ <About />} />
+            {/* <Route path='/' element={ <Home />} ></Route> */}
             </Routes>
         // <About />
         // <BrowserRouter>
