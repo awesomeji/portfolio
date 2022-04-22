@@ -32,38 +32,14 @@ mongoose.connect(MONGO_URI
 // { useNewUrlParser: true } is no longer supported from mongoose >=6.0
 
 // 패스포트 모듈 설정
-require('./config/passport')(passport);
+require('./middleware/passport')(passport);
 
 
 // 라우팅 파트
 app.use('/api/users', users);
 
 
-app.get('/', (req, res) => {
-    res.send('Hello express, node, nodemon, mongoDB, mongoose, postman, git, github and react.js');
-});
 
-app.post('/api/users/register', (req, res) => {
- 
-    const user = new User(req.body);
-    user.save((err, doc) => {
-        if (err) return res.json({ success: false, error:err });
-        return res.status(200).json({
-            success: true,
-            userData: doc
-        });
-    })
-});
-   
-app.post('/api/users/login', (req, body) => { 
-    //find email
-
-    //compare password
-
-    //generate token
-
-});
-app.use('/api/users', users);
 app.listen(port,() => console.log('This app listening at http://localhost:' + port));
 
 

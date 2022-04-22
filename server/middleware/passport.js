@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { auth } = require('../middleware/auth');
+
 const { append } = require('express/lib/response');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -12,42 +12,9 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
 const { verifyToken } = require('../utils/jwt');
-const { refreshToken } =require('../middleware/refreshToken');
+
 
 const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
-
-
-
-
-module.exports = passport => {
-
-    const opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-    opts.secretOrKey = JWT_ACCESS_SECRET
-    opts.passReqToCallback = true;
-    
-    passport.use(new JwtStrategy(opts,(req,jwt_payload, done) => {
-        // console.log(passport);
-        console.log(req)
-        console.log(jwt_payload);
-   
-   
-       
-        User.findById(jwt_payload.id)
-            .then(user => {
-                if(user) {
-                    return done(null, user)
-                }
-              
-                return done(null, false);
-            })
-            .catch(err => console.log(err)
-           
-            );
-    }
-    ))
-};
-
 
 
 module.exports = custom => {
@@ -131,8 +98,6 @@ module.exports = custom => {
                 )})
         }
     }
-        
-    // console.log(reqAcToken)
     
 }))}
 

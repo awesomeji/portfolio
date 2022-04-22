@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const custom = require('../../config/custom');
 require('dotenv').config(); //.env file is should be in root directory
-const { auth } = require("../../middleware/auth");
 
 const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REFRESH_EXPIRATION_TIME } = process.env;
 const bcrypt = require('bcrypt');
@@ -90,6 +88,7 @@ router.post('/login', (req, res) => {
             res.cookie('refreshToken', refreshT, { httpOnly: true })
             res.json({
                 success: true,
+                accesPayload : accessPayload,
                 accessToken: accessToken
             })
                 User.saveRefreshToken(refreshT)

@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server/server.js",
-    "backend": "nodemon server/server.js"
+    "backend": "nodemon server/server.js",
+    "frontend": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   },
   "repository": {
     "type": "git",
@@ -20,6 +22,7 @@
   "homepage": "https://github.com/awesomeji/portfolio#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "concurrently": "^7.1.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
@@ -34,6 +37,7 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
+    "http-proxy-middleware": "^2.0.6",
     "nodemon": "^2.0.15"
   }
 }
