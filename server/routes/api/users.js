@@ -28,7 +28,7 @@ router.get('/auth', passport.authenticate('custom', { session: false }), (req, r
         res.cookie('refreshToken', req.user.refreshToken, { httpOnly: true })
     }
     res.json({
-        
+        isAuth:true,
         id : req.user.id,
         userid: req.user.userid,
         role: req.user.role,
@@ -55,6 +55,7 @@ router.post('/register', (req, res) => {
    
 router.post('/login', (req, res) => { 
     const { userid, password } = req.body;
+    console.log(userid, password);
     //find email
     User.findOne({ userid  })
         .then(user => {
@@ -62,7 +63,7 @@ router.post('/login', (req, res) => {
             if (!user) {
                    return res.json({
                 loginSuccess: false,
-                message: "Auth failed, ID not found"
+                message: "ID not found"
                 });
             }
         
@@ -87,7 +88,7 @@ router.post('/login', (req, res) => {
             //note that maxAge is in milliseconds
             res.cookie('refreshToken', refreshT, { httpOnly: true })
             res.json({
-                success: true,
+                loginsuccess: true,
                 accesPayload : accessPayload,
                 accessToken: accessToken
             })
@@ -100,6 +101,7 @@ router.post('/login', (req, res) => {
             }
             })
         })
+    .catch(err => console.log(err));
 
 });
 
