@@ -1,7 +1,8 @@
 import React from 'react'
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import { useState,useEffect } from 'react';
 import useStore from '../store/store';
+// import axios from 'axios';
 
 
 export default function LoginPage() {
@@ -9,6 +10,7 @@ export default function LoginPage() {
     const [userID, setUserID] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState([]);
+    
 
     //
     const { loginfetch,loginStatus,setLoginStatus,accessToken,setAccessToken } = useStore();
@@ -30,19 +32,24 @@ export default function LoginPage() {
             password: password
     
         }
+     
         loginfetch(loginInfo)
             .then(res => {
-                console.log(res)
+
                 if (res.loginsuccess) {
-                    console.log(res)
+                    // console.log('res.accessToken'+res.accessToken)
                     setLoginStatus(true);
+                    setAccessToken(res.accessToken);
+                   
                     
-                     setError([]);
+                    setError([]);
                 } else { 
                     setError(res.message);
                     alert(res.message);
                 }
             });
+        
+        
     }
 
     useEffect((error) => { 
@@ -69,6 +76,7 @@ export default function LoginPage() {
         </form>
           </div>
           <div>loginStatus : {loginStatus ? 'true' : 'false'}</div>
+          <div>accessToken : {accessToken ? accessToken : 'false'}</div>
           <div>errormessage : {error ? error : ''}</div>
       </div>
   )

@@ -86,7 +86,8 @@ router.post('/login', (req, res) => {
         const accessToken = 'Bearer ' + token
             jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshT) => {
             //note that maxAge is in milliseconds
-            res.cookie('refreshToken', refreshT, { httpOnly: true })
+                res.cookie('refreshToken', refreshT, { httpOnly: true })
+                
             res.json({
                 loginsuccess: true,
                 accesPayload : accessPayload,
