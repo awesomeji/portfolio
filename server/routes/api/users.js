@@ -27,6 +27,9 @@ router.get('/auth', passport.authenticate('custom', { session: false }), (req, r
     if (req.user.refreshToken) { 
         res.cookie('refreshToken', req.user.refreshToken, { httpOnly: true })
     }
+    if (req.user.accessToken) { 
+        res.cookie('accessToken', req.user.accessToken, { httpOnly: true })
+    }
     res.json({
         isAuth:true,
         id : req.user.id,
@@ -61,7 +64,7 @@ router.post('/login', (req, res) => {
         .then(user => {
 
             if (!user) {
-                   return res.json({
+                return res.json({
                 loginSuccess: false,
                 message: "ID not found"
                 });
@@ -82,11 +85,13 @@ router.post('/login', (req, res) => {
             }
                  jwt.sign(accessPayload, JWT_ACCESS_SECRET, { expiresIn:  JWT_ACCESS_EXPIRATION_TIME}, (err, token) => {
         
-     
+                     
+            // res.cookie('accessToken', token, { httpOnly: true })
         const accessToken = 'Bearer ' + token
             jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshT) => {
             //note that maxAge is in milliseconds
-                res.cookie('refreshToken', refreshT, { httpOnly: true })
+                console.log(refreshT)
+                res.cookie('refreshToken', refreshT, {httpOnly: true })
                 
             res.json({
                 loginsuccess: true,

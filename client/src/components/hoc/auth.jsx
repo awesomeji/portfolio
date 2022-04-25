@@ -17,8 +17,8 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
 
     useEffect(()=>{
-        console.log('accessToken : ' + accessToken)
-        auth(accessToken).then(res => { console.log(res)});
+       
+        auth().then(res => { console.log(res)});
 
     },[])
     return(
