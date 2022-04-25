@@ -2,7 +2,7 @@ import { useState } from 'react'
 import {Route,Routes,BrowserRouter} from 'react-router-dom'
 import About from './components/About'
 import Login from './components/LoginPage'
-import create from 'zustand'
+
 import useStore from './store/store'
 
 function App() {

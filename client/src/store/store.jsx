@@ -1,6 +1,6 @@
 import create from 'zustand'
 import axios from 'axios';
-import { header } from 'express/lib/response';
+// import { header } from 'express/lib/response';
 
 
 const useStore = create(
@@ -12,7 +12,7 @@ const useStore = create(
         loginStatus: false,
         setLoginStatus: (status) => set({ loginStatus: status }),
         loginfetch: async (dataToSubmit) => {
-            const result = await axios.post('/api/users/login', dataToSubmit)
+            const result = await axios.post('api/users/login', dataToSubmit)
                 .then(res => res.data);
             return result;
         },

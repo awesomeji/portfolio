@@ -2,7 +2,7 @@
 import useStore from '../store/store';
 import {useEffect} from 'react'
 import axios from 'axios'
-import {auth} from '../../_actions/user_action'
+
 
 
 export default function (SpecificComponent, option, adminRoute = null) {

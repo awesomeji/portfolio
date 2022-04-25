@@ -8,8 +8,8 @@ const { JWT_ACCESS_SECRET, JWT_ACCESS_EXPIRATION_TIME,JWT_REFRESH_SECRET,JWT_REF
 const bcrypt = require('bcrypt');
 
 const { User } = require('../../models/User'); 
-const res = require('express/lib/response');
-const { redirect, append } = require('express/lib/response');
+// const res = require('express/lib/response');
+// const { redirect, append } = require('express/lib/response');
 
 router.get('/', (req, res) => {
     console.log('router')

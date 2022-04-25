@@ -8,16 +8,16 @@ export default defineConfig({
         proxy: {
             '/api': {
                 target: 'http://localhost:5000',
-                changeOrigin: true,
+                changeOrigin: true,  
+                secure: false,
+                rewrite: (path) => path.replace(/^\/api/, ''),
                 // configure: (proxy, options) => {
                 //   // proxy 변수에는 'http-proxy'의 인스턴스가 전달됩니다
                 // }
             }
-        }
-    },
-      define: {
-          'process.env': {}
-}
+        },
+    
+    }
   
 
 })
