@@ -2,7 +2,7 @@ import React from 'react'
 // import styled from 'styled-components';
 import { useState,useEffect } from 'react';
 import useStore from '../store/store';
-// import axios from 'axios';
+
 
 
 export default function LoginPage() {
@@ -13,7 +13,7 @@ export default function LoginPage() {
     
 
     //
-    const { loginfetch,loginStatus,setLoginStatus,accessToken,setAccessToken } = useStore();
+    const { loginfetch,loginStatus,setLoginStatus,setAccessToken} = useStore();
    
     //prevent default submit
     const onUseridHandler = (e) => { 
@@ -40,8 +40,6 @@ export default function LoginPage() {
                     // console.log('res.accessToken'+res.accessToken)
                     setLoginStatus(true);
                     setAccessToken(res.accessToken);
-                   
-                    
                     setError([]);
                 } else { 
                     setError(res.message);
@@ -76,8 +74,8 @@ export default function LoginPage() {
         </form>
           </div>
           <div>loginStatus : {loginStatus ? 'true' : 'false'}</div>
-          <div>accessToken : {accessToken ? accessToken : 'false'}</div>
           <div>errormessage : {error ? error : ''}</div>
+            {/* <div>accessToken : {accessToken ? accessToken : 'none'}</div> */}
       </div>
   )
 }

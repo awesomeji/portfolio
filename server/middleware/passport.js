@@ -23,11 +23,17 @@ module.exports = custom => {
     const split = req.headers.authorization.split(' ');
     const reqAcToken = split[1];
     const reqRfToken = req.cookies['refreshToken'];
-            
+    console.log('accessToken check in server : '+ req.headers.authorization)        
+    console.log('reqRfToken : '+reqRfToken)        
+     
     const isAccessValid = verifyToken('access', reqAcToken);
     const isRefreshValid = verifyToken('refresh', reqRfToken);
-            
-    if (!isAccessValid) {
+    
+        //     if (!reqAcToken) { }
+
+     
+            // return done(null, { nulltokenmessage: 'No token provided' });
+    if (!isAccessValid ||!reqAcToken) {
     console.log('you need new access token')
         if (isRefreshValid) {
             console.log('and your refresh token is still valid')
@@ -53,9 +59,9 @@ module.exports = custom => {
                 })
                 jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => {
                     
-                    console.log('new accesstoken : ' + accessToken)
+                    console.log('new accesstoken : ' + 'Bearer ' +  accessToken)
                     
-                    userInfo.accessToken = accessToken
+                    userInfo.accessToken = 'Bearer ' +  accessToken
                    
                     
                     return done(null, userInfo)
@@ -63,7 +69,7 @@ module.exports = custom => {
             })
         } else { 
             console.log('your both token expired, try login again')
-            return done(null, false)
+            return done(null, { nulltokenmessage: 'No token provided' });
         }
     
     } else {
@@ -79,7 +85,7 @@ module.exports = custom => {
                         return done(null, user)
                     }
         
-                    return done(null, false);
+                   return done(null, { nulltokenmessage: 'No token provided' });
                 })
                 .catch(err => console.log(err));
         } else { 

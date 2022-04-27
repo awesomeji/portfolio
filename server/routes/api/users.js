@@ -17,18 +17,15 @@ router.get('/', (req, res) => {
 
 });
 router.get('/auth', passport.authenticate('custom', { session: false }), (req, res) => { 
-    
-    if (!req.user) { 
+  
+    if (req.user.nulltokenmessage) { 
          return res.json({
-        isAuth: false,
-        error: true
+             isAuth: false,
+             message: req.user.nulltokenmessage
       });
     }
     if (req.user.refreshToken) { 
         res.cookie('refreshToken', req.user.refreshToken, { httpOnly: true })
-    }
-    if (req.user.accessToken) { 
-        res.cookie('accessToken', req.user.accessToken, { httpOnly: true })
     }
     res.json({
         isAuth:true,
@@ -83,15 +80,15 @@ router.post('/login', (req, res) => {
             const refreshPayload = {
                 id: user.id
             }
-                 jwt.sign(accessPayload, JWT_ACCESS_SECRET, { expiresIn:  JWT_ACCESS_EXPIRATION_TIME}, (err, token) => {
+            jwt.sign(accessPayload, JWT_ACCESS_SECRET, { expiresIn:  JWT_ACCESS_EXPIRATION_TIME}, (err, token) => {
         
-                     
             // res.cookie('accessToken', token, { httpOnly: true })
         const accessToken = 'Bearer ' + token
             jwt.sign(refreshPayload, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshT) => {
             //note that maxAge is in milliseconds
                 console.log(refreshT)
-                res.cookie('refreshToken', refreshT, {httpOnly: true })
+                res.cookie('refreshToken', refreshT, { httpOnly: true  })
+                
                 
             res.json({
                 loginsuccess: true,

@@ -1,23 +1,21 @@
 import create from 'zustand'
+import {devtools} from 'zustand/middleware'
 import axios from '../plugins/axios';
-
-
-
-const useStore = create(
-    set => ({
+ 
+const store = (set) =>   ({
         loginStatus: false,
         setLoginStatus: (status) => set({ loginStatus: status }),
+        accessToken: '',
+        setAccessToken: (token) => set({ accessToken: token }),
         loginfetch: async (dataToSubmit) => {
-            const result = await axios.post('api/users/login', dataToSubmit)
+            const result = await axios.post('api/users/login', dataToSubmit,{ withCredentials: true })
                 .then(res => res.data);
             return result;
         },
-        accessToken:'',
-        setAccessToken: (token) => set({ accessToken: token }),
-        auth: async (token) => { 
+        auth: async (accessToken) => { 
             const result = await axios.get('/api/users/auth', {
                 headers: {
-                    'authorization':  token
+                    'authorization':  accessToken
             }
             })
                 .then(res => res.data);
@@ -25,6 +23,8 @@ const useStore = create(
         }
       
     })
+const useStore = create(
+   devtools(store)
 );
 
 
