@@ -1,12 +1,11 @@
 require('dotenv').config();
 
-
 const { append } = require('express/lib/response');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const passportCustom = require('passport-custom');
 const CustomStrategy = passportCustom.Strategy;
-// const res = require('express/lib/response');
+
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
@@ -23,20 +22,17 @@ module.exports = custom => {
     const split = req.headers.authorization.split(' ');
     const reqAcToken = split[1];
     const reqRfToken = req.cookies['refreshToken'];
-    console.log('accessToken check in server : '+ req.headers.authorization)        
-    console.log('reqRfToken : '+reqRfToken)        
      
     const isAccessValid = verifyToken('access', reqAcToken);
     const isRefreshValid = verifyToken('refresh', reqRfToken);
-    
-        //     if (!reqAcToken) { }
 
-     
-            // return done(null, { nulltokenmessage: 'No token provided' });
+    //when access token isn't valid or exist.        
     if (!isAccessValid ||!reqAcToken) {
-    console.log('you need new access token')
+        
+        //check refresh token is valid
         if (isRefreshValid) {
-            console.log('and your refresh token is still valid')
+         // if it is , then re-issue access token by ID from refresh token
+        // and re-issue refresh token too for secure reason
             console.log(isRefreshValid)
             User.findById({ _id: isRefreshValid.id }, (err, user) => {
                 if (err) {
@@ -59,37 +55,31 @@ module.exports = custom => {
                 })
                 jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => {
                     
-                    console.log('new accesstoken : ' + 'Bearer ' +  accessToken)
                     
                     userInfo.accessToken = 'Bearer ' +  accessToken
-                   
                     
                     return done(null, userInfo)
                 })
             })
         } else { 
-            console.log('your both token expired, try login again')
+            //if refresh token also isn't valid, which means both token aren't valid ,then return error
             return done(null, { nulltokenmessage: 'No token provided' });
         }
     
     } else {
-
+        
         if (isRefreshValid) {
 
-
-            console.log('you have access token')
-            console.log(isAccessValid)
+            //when both taken are valid return user info
             User.findById(isAccessValid.id)
                 .then(user => {
                     if (user) {
                         return done(null, user)
                     }
-        
-                   return done(null, { nulltokenmessage: 'No token provided' });
                 })
                 .catch(err => console.log(err));
         } else { 
-            console.log('your access token is still valid, but your refresh token is expired')
+            //when access token is valid but refresh token isn't, then re-issue refresh token and return user info
             User.findById(isAccessValid.id)
                 .then(user => { 
                     jwt.sign({ id: user.id }, JWT_REFRESH_SECRET, { expiresIn: JWT_REFRESH_EXPIRATION_TIME }, (err, refreshToken) => {
@@ -100,7 +90,7 @@ module.exports = custom => {
                         user.refreshToken = refreshToken
                         User.saveRefreshToken(refreshToken)
                         return done(null, user)
-                      }
+                    }
                 )})
         }
     }
