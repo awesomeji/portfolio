@@ -7,7 +7,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 export default function (SpecificComponent, option, adminRoute = null) {
 
-    const {auth,accessToken}= useStore();
+    const {auth,accessToken,setAccessToken,setLoginStatus}= useStore();
    
     // option = null // pages taht anyone can access
     // true // pages that only loginuser can access
@@ -20,7 +20,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
         auth(accessToken).then(res => {
             console.log(res)
             if (!res.isAuth) {
-                console.log('option : ' + option)
                 if (option) {
                     navigate('/login')
                 }
@@ -30,8 +29,13 @@ export default function (SpecificComponent, option, adminRoute = null) {
                     navigate('/login')
                 } else { 
                  
-                        if(!option){
-                            navigate('/contact', )
+                    console.log(res.accessToken)
+                    if (res.accessToken) { 
+                        setAccessToken(res.accessToken)
+                        setLoginStatus(true)
+                    }
+                    if (!option) {
+                            navigate('/contact' )
          
             }
                     

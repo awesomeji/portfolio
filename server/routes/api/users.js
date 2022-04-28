@@ -111,11 +111,11 @@ router.post('/login', (req, res) => {
 router.get('/logout', (req, res) => { 
     User.findOneAndUpdate({ id : req.id }, { token : null, tokenExp : null }, (err, doc) => { 
         if (err) return res.json({ success: false, error: err });
-        return res.status(200).json({
-            success: true
-        });
     })
-    res.cookie('refreshToken', '', { httpOnly: true })
+    res.clearCookie('refreshToken')
+    return res.status(200).json({
+        logoutsuccess: true
+    });
 })
 
 
