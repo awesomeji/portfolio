@@ -35,7 +35,7 @@ email: {
     unique: 1,
     validate: {
         validator: validator.isEmail,
-        message: '{VALUE} 은 정확한 이메일형식이아닙니다.'
+        message: '{VALUE} 은 정확한 이메일형식이아닙니다./'
     }
 },
 password: {
@@ -51,7 +51,7 @@ password: {
             /[0-9]/.test(password) &&
             /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);;
     },
-    '비밀번호는 8자리 이상 20자리 이하 영문 대/소문자와 특수문자, 숫자의 조합으로 입력해주세요.'
+    '비밀번호는 8자리 이상 20자리 이하 영문 대,소문자와 특수문자, 숫자의 조합으로 입력해주세요./'
     ]
 },
 role: {
@@ -113,7 +113,7 @@ userSchema.statics.saveRefreshToken = function ( refreshToken, cb) {
             if (err) return new Error(err);
             if (!user) return json.res(
                 {
-                    message: '유저가 존재하지 않습니다.'
+                    message: '유저가 존재하지 않습니다./'
                 }
             );
             return true;

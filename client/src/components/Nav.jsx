@@ -36,10 +36,11 @@ export default function Nav() {
             </div> )
               : (<div>
                   <h1>대충로고랑앱이름</h1>
-                  <div> 포폴 </div>
-                  <div> 컨택미 </div>
+                  <div><Link to="/about">포폴</Link>  </div>
+                  <div><Link to="/contact">컨택미</Link>  </div>
                   <div> 크레딧 </div>
-                  <div> 로긴/레지스터버튼 </div>
+                  <div><Link to="/login">sign in</Link>  </div>
+                  <div><Link to="/register">sign up</Link></div>
            </div>) }    
       </>
   )

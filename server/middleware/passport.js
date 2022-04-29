@@ -74,6 +74,7 @@ module.exports = custom => {
             User.findById(isAccessValid.id)
                 .then(user => {
                     if (user) {
+                        console.log('user : ' + user)
                         return done(null, user)
                     }
                 })

@@ -6,7 +6,7 @@ const instance = axios.create({
     //for send http only cookie
   headers: {
       "Content-Type": "application/json",
-        "Accept": "application/json"
+      "Accept": "application/json",
   }
 })
 

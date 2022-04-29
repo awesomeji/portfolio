@@ -5,6 +5,7 @@ import axios from '../../plugins/axios'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 
+
 export default function (SpecificComponent, option, adminRoute = null) {
 
     const {auth,accessToken,setAccessToken,setLoginStatus}= useStore();
@@ -18,6 +19,11 @@ export default function (SpecificComponent, option, adminRoute = null) {
         const navigate = useNavigate();
     useEffect(()=>{
         auth(accessToken).then(res => {
+            if (res.accessToken) {
+                setAccessToken(res.accessToken)
+                setLoginStatus(true)
+            }
+        
             console.log(res)
             if (!res.isAuth) {
                 if (option) {
@@ -28,16 +34,9 @@ export default function (SpecificComponent, option, adminRoute = null) {
                    
                     navigate('/login')
                 } else { 
-                 
-                    console.log(res.accessToken)
-                    if (res.accessToken) { 
-                        setAccessToken(res.accessToken)
-                        setLoginStatus(true)
+                    if (option === false) {
+                        navigate('/contact')
                     }
-                    if (!option) {
-                            navigate('/contact' )
-         
-            }
                     
                 }
             }

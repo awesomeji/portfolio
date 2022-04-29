@@ -1,7 +1,7 @@
 import create from 'zustand'
 import {devtools} from 'zustand/middleware'
 import axios from '../plugins/axios';
- 
+
 const store = (set) =>   ({
         loginStatus: false,
         setLoginStatus: (status) => set({ loginStatus: status }),
@@ -11,7 +11,13 @@ const store = (set) =>   ({
             const result = await axios.post('api/users/login', dataToSubmit,{ withCredentials: true })
                 .then(res => res.data);
             return result;
-        },
+    },
+    registerfetch: async (resigterInfo) => { 
+        const result = await axios.post('api/users/register', resigterInfo)
+            .then(res => res.data);
+        return result;
+
+    },
         auth: async (accessToken) => { 
             const result = await axios.get('/api/users/auth', {
                 headers: {
@@ -20,7 +26,8 @@ const store = (set) =>   ({
             })
                 .then(res => res.data);
             return result;
-        }
+    }
+        
       
     })
 const useStore = create(
