@@ -25,8 +25,8 @@ export default function ContactMe() {
                             <td>write랑 view 먼저만들고 해보자고</td>
                         </tr>
                     </tbody>
-                    <Link to="/write">글쓰기</Link>
                 </table>
+                    <Link to="/write">글쓰기</Link>
       </div>) :(<></>) }
      
       </>

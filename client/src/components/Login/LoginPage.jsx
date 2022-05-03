@@ -1,6 +1,6 @@
 import React from 'react'
 // import styled from 'styled-components';
-import { useState,useEffect } from 'react';
+import { useState} from 'react';
 import useStore from '../../store/store';
 import styled from 'styled-components';
 import Logo from '../../assets/logo.png';
@@ -10,7 +10,7 @@ export default function LoginPage() {
     //state for login info
     const [userID, setUserID] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState([]);
+
     
 
     //
@@ -25,8 +25,6 @@ export default function LoginPage() {
     }
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        console.log('userID : ' + userID)
-        console.log('password : ' + password)
 
         let loginInfo = {
             userid: userID,
@@ -41,9 +39,9 @@ export default function LoginPage() {
                     // console.log('res.accessToken'+res.accessToken)
                     setLoginStatus(true);
                     setAccessToken(res.accessToken);
-                    setError([]);
+                 
                 } else { 
-                    setError(res.message);
+                
                     alert(res.message);
                 }
             });
@@ -51,9 +49,7 @@ export default function LoginPage() {
         
     }
 
-    useEffect((error) => { 
 
-    })
 
 
   return (

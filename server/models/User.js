@@ -65,15 +65,11 @@ token: {
 tokenExp: {
     type: Number
 },
-register_date: {
-    type: String,
-    default: date
-    },
 member_profile: {
     type: String,
     //for 
 }
-});
+},{timestamps: true});
 
 //encrypt password before saving to database using bcrypt
 // and mongoose middleware (pre)
