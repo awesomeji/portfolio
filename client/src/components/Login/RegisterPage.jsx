@@ -1,9 +1,9 @@
 import { React, useState } from 'react'
-import useStore from '../store/store'
+import useStore from '../../store/store'
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { useNavigate } from 'react-router-dom';
-
+import styled from 'styled-components';
 
 export default function RegisterPage() {
  
@@ -78,21 +78,68 @@ export default function RegisterPage() {
     }
   return (
       <div>
-          <form onSubmit={ onSubmitHandler}>
-              <h1>회원가입</h1>
-              <span>ID : </span>
-              <input onChange={e=> onIDHandler(e)} value={userID} type="text" />
-              <span>Email : </span>
-              <input onChange={e=> onEmailHandler(e)} value={email} type="email" />
-              <span>Name : </span>
-              <input onChange={e=> onNameHandler(e)} value={name} type="text" />
-              <span>Password : </span>
-              <input onChange={e=> onPWHandler(e)} value={PW} type="password" />
-              <span>Confirm password : </span>
-              <input onChange={e=> onPWCheckHandler(e)} value={PWCheck} type="password" />
-              <button type="submit">register</button>
-          </form>
-          <div>error{error? error :'nono' }</div>
+          <StyledRegister onSubmit={onSubmitHandler}>
+              <StyledForm>
+              <h1>Sign Up</h1>
+              <span>ID  </span>
+              <StyledInput  onChange={e=> onIDHandler(e)} value={userID} type="text" />
+              <span>Email  </span>
+              <StyledInput  onChange={e=> onEmailHandler(e)} value={email} type="email" />
+              <span>Name  </span>
+              <StyledInput  onChange={e=> onNameHandler(e)} value={name} type="text" />
+              <span>Password  </span>
+              <StyledInput  onChange={e=> onPWHandler(e)} value={PW} type="password" />
+              <span>Confirm password  </span>
+              <StyledInput  onChange={e=> onPWCheckHandler(e)} value={PWCheck} type="password" />
+              <StyledButton type="submit">register</StyledButton>
+              </StyledForm>
+          </StyledRegister>
     </div>
   )
 }
+const StyledRegister = styled.div`
+padding: 1rem;
+border : 1px solid #F5F5F5;
+width : 50%;
+min-height : 30rem;
+margin : 7rem auto;
+border-radius : 1.5rem;
+font-family: 'Orbitron', sans-serif;
+background-color : #F5F5F5;
+`;
+
+const StyledForm = styled.form`
+margin : 2rem auto;
+height : 35rem;
+align-items : center;
+display : flex;
+flex-direction : column;
+justify-content : space-around;
+background-color : black;
+width : 50%;
+color : white;
+border-radius : 1rem;
+`;
+
+const StyledInput = styled.input`
+    height : 2rem;
+    width : 15rem;
+    border-radius : 0.5rem;
+    border : 1px solid white;
+`;
+
+const StyledButton = styled.button`
+font-family: 'Orbitron', sans-serif;
+margin : 0 1rem;
+min-width : 4rem;
+min-height : 2rem;
+background: none;
+border : 1px solid white;
+cursor : pointer;
+color : black;
+background-color : white;
+border-radius : 0.5rem;
+&hover:{
+    color :#0C6D10;
+}
+`;

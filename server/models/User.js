@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const bcrypt = require('bcrypt');//encrypt password
 const saltRounds = 10;
-const passport = require('passport');
+
 var moment = require('moment');//get local time
 require('moment-timezone');
 moment.tz.setDefault("Asia/Seoul");

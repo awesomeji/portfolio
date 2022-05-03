@@ -11,11 +11,7 @@ const { User } = require('../../models/User');
 // const res = require('express/lib/response');
 // const { redirect, append } = require('express/lib/response');
 
-router.get('/', (req, res) => {
-    console.log('router')
-    res.send("패스포트 모듈 테스트");
 
-});
 router.get('/auth', passport.authenticate('custom', { session: false }), (req, res) => { 
   
     if (req.user.nulltokenmessage) { 
