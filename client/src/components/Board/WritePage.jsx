@@ -2,8 +2,10 @@ import React from 'react'
 import Styled from 'styled-components';
 import { useState } from 'react';
 import useStore from '../../store/store';
-import axios from  '../../plugins/axios';
+import axios from '../../plugins/axios';
+import { useNavigate } from 'react-router-dom';
 export default function WritePage() {
+    const navigate = useNavigate();
     const {userInfo} = useStore();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -25,7 +27,12 @@ export default function WritePage() {
         }
         axios.post('/api/board/write', postInfo)
             .then(res => {
-                console.log(res)
+                if (!res.data.success) {
+                    alert(res.data.error);
+                } else { 
+                    alert('글이 작성되었습니다.');
+                    navigate('/board');
+                }
             })
         
     }

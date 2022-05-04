@@ -1,10 +1,26 @@
 import React from 'react'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import axios from '../../plugins/axios';
 import useStore from '../../store/store';
 import {Link} from 'react-router-dom';
 
 export default function ContactMe() {
-        const {loginStatus,accessToken} = useStore();
+    const { loginStatus, accessToken } = useStore();
+    
+   
+
+    useEffect(() => { 
+        axios.get('/api/board/list')
+            .then(res => { 
+                console.log(res.data)
+                if (!res.data.success) { 
+                    alert(res.data.error)
+                } else {
+                    console.log(res.data.posts)
+                }
+
+            })
+    }, [])
     return (
         <>
             {loginStatus ? ( <div>
@@ -27,7 +43,11 @@ export default function ContactMe() {
                     </tbody>
                 </table>
                     <Link to="/write">글쓰기</Link>
-      </div>) :(<></>) }
+                <button >
+                    페찌
+                    </button>
+            </div>
+            ) : (<></>)}
      
       </>
       

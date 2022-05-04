@@ -24,7 +24,7 @@ function App() {
         <Route path='*' element={  <AuthAbout />} />
         <Route path='/about' element={   <AuthAbout />} />
         <Route path='/login' element={ <AuthLogin />} />
-        <Route path='/contact' element={ <AuthContact />} />
+        <Route path='/board' element={ <AuthContact />} />
         <Route path='/register' element={ <AuthRegister />} />
         <Route path='/write' element={ <AuthWrite />} />
         {/* <Route path='/' element={ <Home />} ></Route> */}

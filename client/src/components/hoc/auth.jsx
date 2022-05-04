@@ -19,7 +19,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
         const navigate = useNavigate();
         useEffect(()=>{
         auth(accessToken).then(res => {
-            console.log(res)
+            // console.log(res)
             // if (res.id) {
             //      console.log(res.id)
             //         console.log(res.userid)
@@ -32,7 +32,6 @@ export default function (SpecificComponent, option, adminRoute = null) {
                 setAccessToken(res.accessToken)
                 setLoginStatus(true)
                 setUserInfo(res.id,res.userid,res.role)
-                console.log(userInfo)
                
             }
             if (res.isAuth===false) {

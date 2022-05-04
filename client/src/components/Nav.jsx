@@ -36,7 +36,7 @@ export default function Nav() {
       </LogoFrame>
         
         <StyledLink to="/about">Activity</StyledLink>     
-        <StyledLink to="/contact">Contact</StyledLink>    
+        <StyledLink to="/board">Contact</StyledLink>    
       Credit
        <StyledButton onClick={logoutHandler}>LogOut</StyledButton> 
       </Frame> )
@@ -46,7 +46,7 @@ export default function Nav() {
             <h1>Portfolio</h1>
             </LogoFrame>
             <StyledLink to="/about">Activity</StyledLink> 
-            <StyledLink to="/contact">Contact</StyledLink>  
+            <StyledLink to="/board">Contact</StyledLink>  
               Credit
                   <div>
 

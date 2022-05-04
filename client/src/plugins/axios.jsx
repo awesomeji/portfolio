@@ -12,7 +12,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    console.log('axios.js request : ' , config);
+    // console.log('axios.js request : ' , config);
     return config
   }, 
   (error) => {
@@ -21,7 +21,7 @@ instance.interceptors.request.use(
 );
 instance.interceptors.response.use(
   (res) => {
-    console.log('axios.js response : ' , res);
+    // console.log('axios.js response : ' , res);
     return res
   },
   (error) => {

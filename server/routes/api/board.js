@@ -15,4 +15,21 @@ router.post('/write', (req, res) => {
     })
 })
 
+
+router.get('/list', (req, res) => { 
+    Board.find()
+        .then(posts => { 
+            return res.status(200).json({
+                success: true,
+                posts: posts
+            })
+        })
+        .catch((err) => { 
+            return res.status(404).json({
+                success: false,
+                error: err
+            })
+        });
+})
+
 module.exports = router;
