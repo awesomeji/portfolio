@@ -24,6 +24,7 @@ router.get('/list', async (req, res) => {
     const SortOrder = req.query.sortOrder || -1;
     const conditionA = req.query.searchOptionA || '';
     const conditionB = req.query.searchOptionB || '';
+    const sortByIdx = req.query.sortByIdx || -1;
     const total = await Board.countDocuments();
     let query = {};
    
@@ -37,7 +38,7 @@ router.get('/list', async (req, res) => {
             })
         query = { 'writer': id }
     }
-    console.log(query)
+    // console.log(query)
    
     Board.find(query)
         .populate('writer')
@@ -45,9 +46,27 @@ router.get('/list', async (req, res) => {
         .skip((page - 1) * perPage)
         .limit(perPage)
         .then(posts => { 
+            let postarray = [];
+            let index = 1;
+            posts.map(post => { 
+                postarray.push({
+                    index: index++,
+                    title: post.title,
+                    writer: post.writer,
+                    createdAt: post.createdAt,
+                    updatedAt: post.updatedAt,
+                    _id: post._id
+                })
+            })
+            
+            if (sortByIdx == '1') {
+                postarray=postarray.reverse()
+            }
+            
+            // console.log(postarray)
             return res.status(200).json({
                 success: true,
-                posts: posts,
+                posts: postarray,
                 total: total,
                 totalPage: Math.ceil(total / perPage)
             })

@@ -13,6 +13,7 @@ export default function ContactMe() {
     const [total, setTotal] = useState();
     const [sortBy, setSortBy] = useState('createdAt');
     const [sortOrder, setSortOrder] = useState(-1);
+    const [sortByIdx, setSortByIdx] = useState(-1);
     const [searchOptionA, setSearchOptionA] = useState('');
     const [searchOptionB, setSearchOptionB] = useState('');
     const [searchOptions, setSearchOptions] = useState([]);
@@ -28,7 +29,8 @@ export default function ContactMe() {
             sortBy: sortBy,
             sortOrder: sortOrder,
             searchOptionA: searchOptions[0],
-            searchOptionB: searchOptions[1]
+            searchOptionB: searchOptions[1],
+            sortByIdx: sortByIdx
         }
         axios.get('/api/board/list',{params:request})
             .then(res => { 
@@ -44,7 +46,7 @@ export default function ContactMe() {
                 }
                 
             })
-        }, [page,perPage,sortBy,sortOrder,searchOptions])
+        }, [page,perPage,sortBy,sortOrder,searchOptions,sortByIdx])
         
        
         let pageNumber = [];
@@ -72,12 +74,22 @@ export default function ContactMe() {
         setSortBy(e);
         sortOrder===1 ? setSortOrder(-1) : setSortOrder(1); 
     }
+
+    const setSortByIdxHandler = () => { 
+       
+        sortByIdx === 1 ? setSortByIdx(-1) : setSortByIdx(1); 
+        
+    }
     let i = 0;
+    // 아 이거 인덱싱(글번호매기기)제대로하려면 몽구스스키마로 잘라서 가져오지말고
+    // 다 가져온다음에 앞에서 짤라줘야함 
+    //여기선 인덱싱 없이가고 보일러플레이트로 올릴때는 뒤에서 다 끌고와서 앞에서 짜르도록하자
     
     return (
         <>
             {loginStatus ? (
                 <div>
+                    
                     <form onSubmit={e=>onSearchOptionsHandler(e)}>
                         <select value={searchOptionA} onChange={onSearchOptionAHandler}>
                             <option value="">선택</option>
@@ -92,21 +104,22 @@ export default function ContactMe() {
                     </colgroup>
                     <thead>
                         <tr>
-                            <th>번호</th>
+                                <th> <span onClick={setSortByIdxHandler }>번호</span></th>
                                 <th> <span onClick={()=>setSortHandlaer('title') }>제목</span> </th>
                                 <th> <span onClick={()=>setSortHandlaer('writer') }>작성자</span> </th>
                                 <th> <span onClick={()=>setSortHandlaer('createdAt') }>작성날짜</span> </th>
                      </tr>
                     </thead>
                     <tbody>
-                            {data && data.map((item, index) => {
+                            {data && data.map((item, idx) => {
                                 const realtime = new Date(item.createdAt).toLocaleString();
+                                
+                               
                                 i++;
-                               
-                               
+                                let index = item.index + (page - 1) * perPage;
                                 return (
                                     <tr key={i}>
-                                        <td>{i}</td>
+                                        <td>{index}</td>
                                         <td>{item.title}</td>
                                         <td>{item.writer.userid}</td>
                                         <td>{realtime}</td>
