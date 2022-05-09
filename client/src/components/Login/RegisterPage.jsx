@@ -98,48 +98,113 @@ export default function RegisterPage() {
   )
 }
 const StyledRegister = styled.div`
+
 padding: 1rem;
-border : 1px solid #F5F5F5;
+
+border : 3px solid #F5F5F5;
+
 width : 50%;
+
 min-height : 30rem;
+
 margin : 7rem auto;
+
 border-radius : 1.5rem;
+
 font-family: 'Orbitron', sans-serif;
-background-color : #F5F5F5;
+
 `;
 
 const StyledForm = styled.form`
+
 margin : 2rem auto;
-height : 35rem;
+
+height : 38rem;
+
 align-items : center;
+
 display : flex;
+
 flex-direction : column;
+
 justify-content : space-around;
-background-color : black;
-width : 50%;
+
+background-color : #000000;
+
+width : 80%;
+
 color : white;
+
 border-radius : 1rem;
+
+.contents_wrap{
+
+width:400px;
+
+display : flex;
+
+justify-content: space-around;
+
+align-items : center;
+
+flex-direction: column;
+
+}
+
+span{
+
+display : flex;
+
+justify-content: flex-start;
+
+align-items : center;
+
+width:250px;
+
+margin-bottom:6px;
+
+}
+
 `;
 
 const StyledInput = styled.input`
-    height : 2rem;
-    width : 15rem;
-    border-radius : 0.5rem;
-    border : 1px solid white;
+
+height : 2rem;
+
+width : 15rem;
+
+border-radius : 0.5rem;
+
+border : 1px solid white;
+
 `;
 
 const StyledButton = styled.button`
+
 font-family: 'Orbitron', sans-serif;
+
 margin : 0 1rem;
+
 min-width : 4rem;
+
 min-height : 2rem;
+
 background: none;
+
 border : 1px solid white;
+
 cursor : pointer;
+
 color : black;
+
 background-color : white;
+
 border-radius : 0.5rem;
-&hover:{
-    color :#0C6D10;
+
+&hover{
+
+color :#0C6D10;
+
 }
+
 `;

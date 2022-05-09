@@ -131,7 +131,7 @@ cursor : pointer;
 color : black;
 background-color : white;
 border-radius : 0.5rem;
-&hover:{
+&hover{
     color :#0C6D10;
 }
 `;
@@ -139,7 +139,7 @@ border-radius : 0.5rem;
 const StyledLink = styled(Link)`
 text-decoration : none;
 color : black;
-&hover:{
+&hover{
     color :#0C6D10;
 }
 `

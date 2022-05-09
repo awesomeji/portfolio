@@ -60,42 +60,77 @@ export default function Nav() {
 }
 
 const Frame = styled.div`
-    height : 6rem;
-    display : flex;
-    border-bottom : 1px solid black;
-    justify-content : space-between;
-    align-items : center;
-    font-size : 1.5rem;
-    font-family: 'Gugi', cursive;
-  
-`;
-//align-items : center flex상태에서 위로 몰린 텍스트 중앙을 정렬    
-const LogoFrame = styled.div`
-    display:flex;
-    font-size :1rem;
-    font-style : italic;
-   
-`;
-const StyledLink = styled(Link)`
-    text-decoration : none;
-    color : black;
-    &:hover{
-        color :#0C6D10;
-    }
-`
-const StyledButton = styled.button`
+
+height : 6rem;
+
+display : flex;
+
+box-shadow:0px 3px 7px #d6d6d670;
+
+justify-content : space-around;
+
+align-items : center;
+
 font-size : 1.5rem;
+
 font-family: 'Gugi', cursive;
-margin : 0 1rem;
-min-width : 4rem;
-min-height : 2rem;
-background: none;
-border : none;
-cursor : pointer;
+
+`;
+
+//align-items : center flex상태에서 위로 몰린 텍스트 중앙을 정렬*
+
+const LogoFrame = styled.div`
+
+display:flex;
+
+font-size :1rem;
+
+font-style : italic;
+
+`;
+
+const StyledLink = styled(Link)`
+
+text-decoration : none;
+
 color : black;
-background-color : white;
-border-radius : 0.5rem;
-&hover:{
-    color :#0C6D10;
+
+&:hover{
+
+color :#0C6D10;
+
 }
+
+`
+
+const StyledButton = styled.button`
+
+font-size : 1.5rem;
+
+font-family: 'Gugi', cursive;
+
+margin : 0 1rem;
+
+min-width : 4rem;
+
+min-height : 2rem;
+
+background: none;
+
+border : none;
+
+cursor : pointer;
+
+color : black;
+
+background-color : white;
+
+border-radius : 0.5rem;
+
+&hover{
+
+color :#0C6D10;
+
+}
+
 `;
