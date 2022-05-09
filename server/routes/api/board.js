@@ -62,8 +62,8 @@ router.get('/list', async (req, res) => {
             if (sortByIdx == '1') {
                 postarray=postarray.reverse()
             }
-            
-            // console.log(postarray)
+           
+            console.log(posts.length)
             return res.status(200).json({
                 success: true,
                 posts: postarray,

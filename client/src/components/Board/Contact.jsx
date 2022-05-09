@@ -2,7 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from '../../plugins/axios';
 import useStore from '../../store/store';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Styled from 'styled-components';
 
 export default function ContactMe() {
     const { loginStatus} = useStore();
@@ -52,6 +53,7 @@ export default function ContactMe() {
         let pageNumber = [];
         for (let i = 1; i <= totalPage; i++) { 
             pageNumber.push(i);
+            console.log(pageNumber)
         }
     const onPerPageHandler = (e) => { 
         e.preventDefault();
@@ -88,7 +90,7 @@ export default function ContactMe() {
     return (
         <>
             {loginStatus ? (
-                <div>
+                <StyledFrame>
                     
                     <form onSubmit={e=>onSearchOptionsHandler(e)}>
                         <select value={searchOptionA} onChange={onSearchOptionAHandler}>
@@ -99,15 +101,19 @@ export default function ContactMe() {
                         <input value={searchOptionB} onChange={(e)=> setSearchOptionB(e.target.value) }  type="text" />
                         <button type="submit">검색</button>
                     </form>
-                <table border="1">
-                    <colgroup>
+                <StyledTable>
+                        <colgroup>
+                            <col width="5%" />
+                            <col width="60%"/>
+                            <col width="20%"/>
+                            <col width="15%"/>
                     </colgroup>
                     <thead>
                         <tr>
-                                <th> <span onClick={setSortByIdxHandler }>번호</span></th>
-                                <th> <span onClick={()=>setSortHandlaer('title') }>제목</span> </th>
-                                <th> <span onClick={()=>setSortHandlaer('writer') }>작성자</span> </th>
-                                <th> <span onClick={()=>setSortHandlaer('createdAt') }>작성날짜</span> </th>
+                                <th> <StyledSpan onClick={setSortByIdxHandler }>번호</StyledSpan></th>
+                                <th> <StyledSpan onClick={()=>setSortHandlaer('title') }>제목</StyledSpan> </th>
+                                <th> <StyledSpan onClick={()=>setSortHandlaer('writer') }>작성자</StyledSpan> </th>
+                                <th> <StyledSpan onClick={()=>setSortHandlaer('createdAt') }>작성날짜</StyledSpan> </th>
                      </tr>
                     </thead>
                     <tbody>
@@ -127,7 +133,7 @@ export default function ContactMe() {
                                 )
                             })}
                     </tbody>
-                    </table>
+                    </StyledTable>
                     <li >
                         <span key={page!==1? page-1 : 0 } onClick={() => { if (page !== 1) { setPage(page - 1) } }}>◀</span>
                     {pageNumber.map((page) => (
@@ -151,10 +157,58 @@ export default function ContactMe() {
                     </div>
                     <Link to="/write">글쓰기</Link>
                 
-            </div>
+            </StyledFrame>
             ) : (<></>)}
      
       </>
       
   )
 }
+
+const StyledFrame= Styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:100%;
+    margin : 150px auto;
+`
+const StyledTable = Styled.table`
+    width : 70%;
+    text-align : center;
+    
+    border-collapse: collapse;
+    thead{
+        background-color : black;
+        tr{
+            height : 50px;
+        }
+        th{
+            color : #0F9B05;
+             span:hover{
+        color : white;
+        }
+        }
+        th:nth-child(1){
+            border-radius : 15px 0 0 0;
+        }
+        th:nth-child(4){
+            border-radius : 0 15px 0 0;
+        }
+    }
+    
+    tbody tr{
+        height :40px;
+    }
+    tbody tr:nth-child(even){
+        background-color : #f2f2f2;
+
+    }
+`
+
+const StyledSpan = Styled.span`
+    cursor : pointer;
+    font-size : 20px;
+   
+`
