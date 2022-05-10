@@ -7,12 +7,14 @@ import Contact from './components/Board/Contact'
 import Auth from './components/hoc/auth'
 import Write from './components/Board/WritePage'
 import Nav from './components/Nav'
+import Notiontest from './components/NotionTest'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 
 function App() {
  
-    const AuthAbout = Auth(About,null);
+    const AuthAbout = Auth(About, null);
+    const AuthNotionTest = Auth(Notiontest, null);
     const AuthContact = Auth(Contact, true);
     const AuthLogin = Auth(Login, false);
     const AuthRegister = Auth(Register, false);
@@ -22,6 +24,7 @@ function App() {
        <Nav></Nav>
         <Routes>
         <Route path='*' element={  <AuthAbout />} />
+        <Route path='/notiontest' element={  <AuthNotionTest />} />
         <Route path='/about' element={   <AuthAbout />} />
         <Route path='/login' element={ <AuthLogin />} />
         <Route path='/board' element={ <AuthContact />} />

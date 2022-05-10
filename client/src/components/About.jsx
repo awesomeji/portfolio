@@ -25,11 +25,12 @@ export default function About() {
   return (
       <div >
 
-          <div   >
+          <div style={{overflow:'scroll',maxHeight : 1000,margin:'5px 0 0 0 '}}   >
 
           <NotionRenderer 
           //    blockMap={staticResponse}
-          blockMap={response}
+                  blockMap={response}
+                  fullPage={true}
         
           />
           </div>
