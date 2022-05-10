@@ -91,22 +91,14 @@ export default function ContactMe() {
         <>
             {loginStatus ? (
                 <StyledFrame>
-                    
-                    <form onSubmit={e=>onSearchOptionsHandler(e)}>
-                        <select value={searchOptionA} onChange={onSearchOptionAHandler}>
-                            <option value="">선택</option>
-                            <option value="title">제목</option>
-                            <option value="writer">아이디</option>
-                        </select>
-                        <input value={searchOptionB} onChange={(e)=> setSearchOptionB(e.target.value) }  type="text" />
-                        <button type="submit">검색</button>
-                    </form>
+                    <p> any kind of feedback, suggestions or crirtics are welcome. leave your contact in message, I will call you as soon as possible</p>
+                  
                 <StyledTable>
                         <colgroup>
                             <col width="5%" />
                             <col width="60%"/>
-                            <col width="20%"/>
                             <col width="15%"/>
+                            <col width="20%"/>
                     </colgroup>
                     <thead>
                         <tr>
@@ -155,6 +147,15 @@ export default function ContactMe() {
 
               
                     </div>
+                      <form onSubmit={e=>onSearchOptionsHandler(e)}>
+                        <select value={searchOptionA} onChange={onSearchOptionAHandler}>
+                            <option value="">선택</option>
+                            <option value="title">제목</option>
+                            <option value="writer">아이디</option>
+                        </select>
+                        <input value={searchOptionB} onChange={(e)=> setSearchOptionB(e.target.value) }  type="text" />
+                        <button type="submit">검색</button>
+                    </form>
                     <Link to="/write">글쓰기</Link>
                 
             </StyledFrame>
@@ -177,6 +178,8 @@ const StyledFrame= Styled.div`
 const StyledTable = Styled.table`
     width : 70%;
     text-align : center;
+    border : 1px solid black;
+    
     
     border-collapse: collapse;
     thead{
@@ -190,18 +193,20 @@ const StyledTable = Styled.table`
         color : white;
         }
         }
-        th:nth-child(1){
+        /* th:nth-child(1){
             border-radius : 15px 0 0 0;
         }
         th:nth-child(4){
             border-radius : 0 15px 0 0;
-        }
+        } */
     }
-    
+    tbody{
+        border : 1px solid black;
+    }
     tbody tr{
         height :40px;
     }
-    tbody tr:nth-child(even){
+    tbody tr:nth-child(odd){
         background-color : #f2f2f2;
 
     }

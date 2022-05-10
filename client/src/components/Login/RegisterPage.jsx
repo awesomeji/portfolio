@@ -98,113 +98,62 @@ export default function RegisterPage() {
   )
 }
 const StyledRegister = styled.div`
-
 padding: 1rem;
-
 border : 3px solid #F5F5F5;
-
 width : 50%;
-
 min-height : 30rem;
-
 margin : 7rem auto;
-
 border-radius : 1.5rem;
-
 font-family: 'Orbitron', sans-serif;
-
 `;
 
 const StyledForm = styled.form`
-
 margin : 2rem auto;
-
 height : 38rem;
-
 align-items : center;
-
 display : flex;
-
 flex-direction : column;
-
 justify-content : space-around;
-
 background-color : #000000;
-
 width : 80%;
-
 color : white;
-
 border-radius : 1rem;
 
 .contents_wrap{
-
 width:400px;
-
 display : flex;
-
 justify-content: space-around;
-
 align-items : center;
-
 flex-direction: column;
-
 }
 
 span{
-
 display : flex;
-
 justify-content: flex-start;
-
 align-items : center;
-
 width:250px;
-
 margin-bottom:6px;
-
 }
-
 `;
 
 const StyledInput = styled.input`
-
 height : 2rem;
-
 width : 15rem;
-
 border-radius : 0.5rem;
-
 border : 1px solid white;
-
 `;
 
 const StyledButton = styled.button`
-
 font-family: 'Orbitron', sans-serif;
-
 margin : 0 1rem;
-
 min-width : 4rem;
-
 min-height : 2rem;
-
 background: none;
-
 border : 1px solid white;
-
 cursor : pointer;
-
 color : black;
-
 background-color : white;
-
 border-radius : 0.5rem;
-
 &hover{
-
 color :#0C6D10;
-
-}
-
-`;
+}`;

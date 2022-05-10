@@ -3,7 +3,7 @@ import {devtools} from 'zustand/middleware'
 import axios from '../plugins/axios';
 
 const store = (set) => ({
-    
+    isDarkMode: false,
     userInfo: {
         id : '',
         userid : '',
