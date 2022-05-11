@@ -84,7 +84,7 @@ const Articleboard = styled.div`
     flex-wrap : wrap;
     align-items : center;
     width: 80%;
-    margin : 0 0 0 5%;
+    margin : 0 0 0 3%;
     justify-content: flex-start;
     
 
@@ -102,11 +102,10 @@ a{
         color :rgb(56, 116, 37);
     }
 }
-
 padding: 12px;
 margin: 20px 25px;
-min-width: 150px;
-height:200px; 
+width: 180px;
+height:250px; 
 `
 const MainArticle = styled.div`
     width :100%;
