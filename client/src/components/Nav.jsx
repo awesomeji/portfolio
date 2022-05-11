@@ -5,10 +5,15 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Link, Routes, Route, Outlet } from "react-router-dom";
 import styled from 'styled-components';
 import LogoWhite from '../assets/logoWhite.png';
+import Logo from '../assets/logo.png';
 
 export default function Nav() {
      const navigate = useNavigate();
-    const {setLoginStatus,loginStatus,setAccessToken} = useStore()
+    const { setLoginStatus, loginStatus, setAccessToken, isDarkMode, setIsDarkMode } = useStore()
+    
+    const changeMode = () => { 
+        setIsDarkMode(!isDarkMode)
+    }
       const logoutHandler =() =>{
     axios.get("/api/users/logout")
      .then(res=>{
@@ -31,7 +36,7 @@ export default function Nav() {
     {loginStatus ? 
         (<Frame>
       <LogoFrame>
-      <img src={LogoWhite} alt="logo" />  
+      <img onClick={changeMode}  src={isDarkMode ? Logo : LogoWhite} alt="logo" />  
       <h1>Portfolio</h1>
       </LogoFrame>
         
@@ -64,8 +69,9 @@ const Frame = styled.div`
 height : 6rem;
 
 display : flex;
-
-box-shadow:0px 3px 7px #d6d6d670;
+background-color : #1a1a1a;
+color :#d1cfcf ;
+box-shadow:0px 20px 15px #d6d6d670;
 
 justify-content : space-around;
 
@@ -86,6 +92,11 @@ display:flex;
 font-size :1rem;
 
 font-style : italic;
+img{
+    border-radius : 10%;
+    box-shadow:0px 20px 15px rgba(255,255,255, 0.2);
+    margin: 0 0.5rem;
+}
 
 `;
 
@@ -93,11 +104,11 @@ const StyledLink = styled(Link)`
 
 text-decoration : none;
 
-color : black;
+color :#d1cfcf ;
 
 &:hover{
 
-color :#0C6D10;
+color :#C4E8CA;
 
 }
 
@@ -121,15 +132,15 @@ border : none;
 
 cursor : pointer;
 
-color : black;
+color : #d1cfcf ;
 
-background-color : white;
+background-color : #1a1a1a;
 
 border-radius : 0.5rem;
 
-&hover{
+&:hover{
 
-color :#0C6D10;
+color :#C4E8CA;
 
 }
 

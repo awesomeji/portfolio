@@ -24,17 +24,17 @@ export function Article(props) {
 export default function About() {
 
     
-    const [response, setResponse] = useState([])
+    const [ArticleList, setArticleList] = useState([])
     useEffect(() => { 
-         const NOTION_PAGE_ID = 'e0d1a00fc0cd4590afb5704f59bc72df';
-        fetch(`https://notion-api.splitbee.io/v1/table/${NOTION_PAGE_ID}`)
+         const NOTION_TABLE_ID = 'e0d1a00fc0cd4590afb5704f59bc72df';
+        fetch(`https://notion-api.splitbee.io/v1/table/${NOTION_TABLE_ID}`)
       .then(res =>res.json())
             .then((resJson) => {
           console.log(resJson)
-        setResponse(resJson);
+        setArticleList(resJson);
       });
 
-      console.log(response)
+     
     }, [])
   return (
      <div>
