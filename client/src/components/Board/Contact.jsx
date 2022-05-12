@@ -4,9 +4,10 @@ import axios from '../../plugins/axios';
 import useStore from '../../store/store';
 import { Link } from 'react-router-dom';
 import Styled from 'styled-components';
+import { ThemeProvider} from 'styled-components'
 
 export default function ContactMe() {
-    const { loginStatus} = useStore();
+    const { loginStatus,isDarkMode,inDarkMode,inLightMode} = useStore();
     const [totalPage, setTotalPage] = useState(0);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
@@ -90,6 +91,7 @@ export default function ContactMe() {
     return (
         <>
             {loginStatus ? (
+                <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
                 <StyledFrame>
                     <p> any kind of feedback, suggestions or crirtics are welcome. leave your contact in message, I will call you as soon as possible</p>
                   
@@ -158,7 +160,8 @@ export default function ContactMe() {
                     </form>
                     <Link to="/write">글쓰기</Link>
                 
-            </StyledFrame>
+                    </StyledFrame>
+                </ThemeProvider>
             ) : (<></>)}
      
       </>
@@ -166,26 +169,34 @@ export default function ContactMe() {
   )
 }
 
-const StyledFrame= Styled.div`
+const StyledFrame = Styled.div`
+    font-family: 'Orbitron', sans-serif;
+   background-color: ${props => props.theme.backgroundColor};
+    color : ${props => props.theme.color};
+        caret-color : ${props => props.theme.color};
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     width:100%;
-    height:100%;
-    margin : 150px auto;
+    height:90%;
+    margin :  auto;
+
+    /* p{
+        color :${props => props.theme.color};
+    } */
 `
 const StyledTable = Styled.table`
     width : 70%;
     text-align : center;
-    border : 1px solid black;
+    border : ${props => props.theme.greenLine};
     
     
     border-collapse: collapse;
     thead{
         background-color : black;
         tr{
-            height : 50px;
+            height : 45px;
         }
         th{
             color : #0F9B05;
@@ -201,7 +212,7 @@ const StyledTable = Styled.table`
         } */
     }
     tbody{
-        border : 1px solid black;
+        border : ${props => props.theme.greenLine};
     }
     tbody tr{
         height :40px;

@@ -3,29 +3,36 @@ import { useState,useEffect } from 'react'
 import { NotionRenderer } from 'react-notion'
 import 'prismjs/themes/prism-tomorrow.css'; // only needed for code highlighting
 import 'react-notion/src/styles.css';
-import styled from 'styled-components'
+import styled,{ ThemeProvider} from 'styled-components'
+import { Link } from 'react-router-dom'
+import useStore from '../store/store';
 
 
 // const notion = new NotionAPI();
 // const recordMap = await notion.getPage('83fca179f8314fd784e541e3368df6a5')
 export function Article(props) {
+    
     return (
       <>
-            <ArticleFrame>
-      <a href={props.link} >
+            <ArticleFrame >
+            <Link to={props.link} >
+                    <div style={{height :'70px', overflow:'hidden'}}>
+
         <h1>{props.title}</h1>
+                    </div>
+        <div style={{height: '120px'}}></div>
         <p>{props.description}</p>
         <p>{props.date}</p>
-        </a>
+        </Link>
         </ArticleFrame>
         
-      </>
+    </>
   )
 }
 
 export default function About() {
 
-    
+    const {isDarkMode,inDarkMode,inLightMode} = useStore();
     const [mainArticle, setMainArticle] = useState({})
     const [ArticleList, setArticleList] = useState([])
 
@@ -46,35 +53,35 @@ export default function About() {
         setArticleList(resJson);
       });     
   }, [])
-  return (
-      <MainFrame>
-
-          <MainArticle>
-          <NotionRenderer 
-          //    blockMap={staticResponse}
-                  blockMap={mainArticle}
-                  fullPage={true}
-                  
-          />
-          </MainArticle>
-
-          <Articleboard>
-           {ArticleList.map((blog, index) => {
-               return (
-                   <Article
-                   title={blog.Name}
-                   description={blog.description}
-                   date={blog.date}
-                   link={'/notion/' + blog.slug}
-                   key={index}
-                   />
-                   
-                 
-                   )
-           } 
-           )}
+    return (
+        <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
+    <MainFrame>
+    <MainArticle>
+    <NotionRenderer 
+    //    blockMap={staticResponse}
+    blockMap={mainArticle}
+            fullPage={true}
+            
+            />
+    </MainArticle>
+    <Articleboard>
+    {ArticleList.map((blog, index) => {
+        return (
+            <Article
+            title={blog.Name}
+            description={blog.description}
+            date={blog.date}
+            link={'/notion/' + blog.slug}
+            key={index}
+            ></Article>
+            
+          
+            )
+        } 
+        )}
                 </Articleboard>
       </MainFrame>
+        </ThemeProvider>
   )
 }
 
@@ -84,7 +91,7 @@ const Articleboard = styled.div`
     flex-wrap : wrap;
     align-items : center;
     width: 80%;
-    margin : 0 0 0 3%;
+    margin : 0 0 0 12%;
     justify-content: flex-start;
     
 
@@ -92,28 +99,28 @@ const Articleboard = styled.div`
 `
 const ArticleFrame = styled.div`
 background: rgba(255,255,255,0.1);
-border : 2px solid rgb(56, 116, 37);
+border : ${props => props.theme.greenLine};
 /* border-radius : 10px; */
 text-align : center;
 a{
     text-decoration : none !important;
-    color :#d1cfcf;
+    color :${props => props.theme.color};
     &:hover{
         color :rgb(56, 116, 37);
     }
 }
 padding: 12px;
 margin: 20px 25px;
-width: 180px;
-height:250px; 
+width: 200px;
+height:300px; 
 `
 const MainArticle = styled.div`
     width :100%;
 
     .notion{
         //darkmodechange
-        color : #d1cfcf !important;
-        caret-color : #d1cfcf !important;
+        color : ${props => props.theme.color};
+        caret-color : ${props => props.theme.color};
     }
     .notion-page-header{
         //darkmodechange
@@ -122,17 +129,19 @@ const MainArticle = styled.div`
         /* box-shadow: 0px 5px 10px #C4E8CA; */
     }
     .notion-nav-title{
-       color : #d1cfcf !important;
+       color : ${props => props.theme.color};
     }
 `
 
 const MainFrame = styled.div`
+    font-family: 'Orbitron', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     /* margin :0.5px 0 0 0 ; */
-    background-color: #1a1a1a !important;
+   
+    background-color: ${props => props.theme.backgroundColor};
    
 `

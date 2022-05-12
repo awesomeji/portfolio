@@ -10,6 +10,17 @@ const store = (set) => ({
         userid : '',
         role : '',
     },
+    inDarkMode: {
+        color: '#d1cfcf !important',
+        backgroundColor: '#1a1a1a !important',
+        backgroundColorWithOP: 'rgba(196, 232, 202,0.2) !important',
+        greenLine: ' 2px solid rgb(56, 116, 37);'
+    },
+    inLightMode: {
+        color: '#37352F !important',
+        backgroundColor: '#E8E8E8 !important',
+        greenLine: ' 2px solid black'
+    },
     setUserInfo: (id, userid, role) => set({
         userInfo:{
         id: id,

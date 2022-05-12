@@ -13,6 +13,7 @@ export default function Nav() {
     
     const changeMode = () => { 
         setIsDarkMode(!isDarkMode)
+        console.log(isDarkMode)
     }
       const logoutHandler =() =>{
     axios.get("/api/users/logout")
@@ -32,7 +33,7 @@ export default function Nav() {
  }
 
   return (
-      <>
+      <div style={{ position: 'relative', zIndex: '1' }}>
     {loginStatus ? 
         (<Frame>
       <LogoFrame>
@@ -47,11 +48,11 @@ export default function Nav() {
       </Frame> )
         : (<Frame>
             <LogoFrame>
-            <img src={LogoWhite} alt="logo" />  
+            <img onClick={changeMode}  src={isDarkMode ? Logo : LogoWhite} alt="logo" />  
             <h1>Portfolio</h1>
             </LogoFrame>
             <StyledLink to="/about">Activity</StyledLink> 
-            <StyledLink to="/board">Contact</StyledLink>  
+            <StyledLink  to="/board">Contact</StyledLink>  
               Credit
                   <div>
 
@@ -60,7 +61,7 @@ export default function Nav() {
             <StyledLink to="/register">Sign Up</StyledLink>
             </div>
      </Frame>) }    
-      </>
+      </div>
   )
 }
 
@@ -71,7 +72,7 @@ height : 6rem;
 display : flex;
 background-color : #1a1a1a;
 color :#d1cfcf ;
-box-shadow:0px 20px 15px #d6d6d670;
+box-shadow:0px 10px 5px #565050;
 
 justify-content : space-around;
 
@@ -94,7 +95,7 @@ font-size :1rem;
 font-style : italic;
 img{
     border-radius : 10%;
-    box-shadow:0px 20px 15px rgba(255,255,255, 0.2);
+    box-shadow:0px 5px 5px #cbc4c433;
     margin: 0 0.5rem;
 }
 
@@ -145,3 +146,4 @@ color :#C4E8CA;
 }
 
 `;
+
