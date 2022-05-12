@@ -32,14 +32,15 @@ export function Article(props) {
 
 export default function About() {
 
-    const {isDarkMode,inDarkMode,inLightMode} = useStore();
+    const {isDarkMode,inDarkMode,inLightMode,isEnglishMode} = useStore();
     const [mainArticle, setMainArticle] = useState({})
     const [ArticleList, setArticleList] = useState([])
 
       useEffect(() => {
     // 두번째 방법
     const NOTION_PAGE_ID = '83fca179f8314fd784e541e3368df6a5';
-    fetch(`https://notion-api.splitbee.io/v1/page/${NOTION_PAGE_ID}`)
+    const NOTION_PAGE_ID_KR ='658634c7564b47a285670ec94982331a'
+    fetch(`https://notion-api.splitbee.io/v1/page/${isEnglishMode ? NOTION_PAGE_ID : NOTION_PAGE_ID_KR}`)
       .then(res => res.json())
       .then((resJson) => {
         setMainArticle(resJson);
@@ -52,7 +53,7 @@ export default function About() {
           console.log(resJson)
         setArticleList(resJson);
       });     
-  }, [])
+  }, [isEnglishMode])
     return (
         <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
     <MainFrame>
@@ -90,24 +91,25 @@ const Articleboard = styled.div`
     display: flex;
     flex-wrap : wrap;
     align-items : center;
-    width: 80%;
-    margin : 0 0 0 12%;
+    width: 60%;
+    margin : 0 0 0 0;
     justify-content: flex-start;
     
 
 
 `
 const ArticleFrame = styled.div`
-background: rgba(255,255,255,0.1);
-border : ${props => props.theme.greenLine};
+background: ${props => props.theme.articleBG};
+/* border : ${props => props.theme.greenLine}; */
 /* border-radius : 10px; */
 text-align : center;
 a{
     text-decoration : none !important;
     color :${props => props.theme.color};
-    &:hover{
-        color :rgb(56, 116, 37);
-    }
+   
+}
+&:hover{
+    color :rgb(56, 116, 37) !important;
 }
 padding: 12px;
 margin: 20px 25px;

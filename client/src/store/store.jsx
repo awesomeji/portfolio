@@ -14,13 +14,19 @@ const store = (set) => ({
         color: '#d1cfcf !important',
         backgroundColor: '#1a1a1a !important',
         backgroundColorWithOP: 'rgba(196, 232, 202,0.2) !important',
-        greenLine: ' 2px solid rgb(56, 116, 37);'
+        greenLine: ' 2px solid rgb(56, 116, 37);',
+        articleBG : 'rgba(255,255,255,0.1);'
     },
     inLightMode: {
         color: '#37352F !important',
         backgroundColor: '#E8E8E8 !important',
-        greenLine: ' 2px solid black'
+        greenLine: ' 2px solid black',
+        articleBG : '#dcdcdc;'
     },
+    isEnglishMode: true,
+    setIsEnglishMode : (isEnglishMode) => set(state => ({...state, isEnglishMode})),
+    inEnglishMOde: {fontFamily: "'Orbitron', sans-serif"},
+    inKoreanMode: {fontFamily: "'Noto Sans KR', sans-serif"},
     setUserInfo: (id, userid, role) => set({
         userInfo:{
         id: id,

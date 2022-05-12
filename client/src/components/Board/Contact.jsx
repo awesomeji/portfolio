@@ -128,27 +128,28 @@ export default function ContactMe() {
                             })}
                     </tbody>
                     </StyledTable>
-                    <li >
+                        <li style={{ listStyleType: 'none' }} >
                         <span key={page!==1? page-1 : 0 } onClick={() => { if (page !== 1) { setPage(page - 1) } }}>◀</span>
+                            &nbsp;
+                            &nbsp;
+                            &nbsp;
                     {pageNumber.map((page) => (
-                        <span key={page} onClick={() => setPage(page)}>{page}&nbsp;</span>
-                        ))}
-                        <span key={page!==totalPage? page+1 : totalPage+1} onClick={() => { if (page !== totalPage) { setPage(page + 1) } } }>▶</span>
-                        
-                            </li>
+                        <span key={page} onClick={() => setPage(page)}>{page}&nbsp;&nbsp;&nbsp;</span>
                     
+                        ))}
+                        &nbsp;
+                        <span key={page!==totalPage? page+1 : totalPage+1} onClick={() => { if (page !== totalPage) { setPage(page + 1) } } }>▶</span>
+                            </li>
+                        <br />
+
+                        <StyledScrumbs>
                         <select value={perPage} onChange={onPerPageHandler}>
                             <option value="10">10개씩보기</option>
                             <option value="15">15개씩보기</option>
                             <option value="20">20개씩보기</option>
                             <option value="30">30개씩보기</option>
                         </select>
-                   
-            
-                    <div>
-
-              
-                    </div>
+                 
                       <form onSubmit={e=>onSearchOptionsHandler(e)}>
                         <select value={searchOptionA} onChange={onSearchOptionAHandler}>
                             <option value="">선택</option>
@@ -157,9 +158,14 @@ export default function ContactMe() {
                         </select>
                         <input value={searchOptionB} onChange={(e)=> setSearchOptionB(e.target.value) }  type="text" />
                         <button type="submit">검색</button>
-                    </form>
-                    <Link to="/write">글쓰기</Link>
+                        </form>
+                            <br />
+                            
+                            
+                            <StyledLink to="/write">글쓰기</StyledLink>
+                            
                 
+                        </StyledScrumbs>
                     </StyledFrame>
                 </ThemeProvider>
             ) : (<></>)}
@@ -171,6 +177,7 @@ export default function ContactMe() {
 
 const StyledFrame = Styled.div`
     font-family: 'Orbitron', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
    background-color: ${props => props.theme.backgroundColor};
     color : ${props => props.theme.color};
         caret-color : ${props => props.theme.color};
@@ -227,4 +234,32 @@ const StyledSpan = Styled.span`
     cursor : pointer;
     font-size : 20px;
    
+`
+const StyledScrumbs = Styled.div`
+    width : 30%;
+
+    display : flex;
+    justify-content : space-between;
+
+    select{
+        height : 30px;
+    }
+`
+
+const StyledLink = Styled(Link)`
+padding : 20px 0 0 0;
+text-align : center;
+border : 1px solid red;
+height : 50px;
+width : 100px;
+text-decoration : none;
+
+color :#d1cfcf ;
+
+&:hover{
+
+color :#C4E8CA;
+
+}
+
 `

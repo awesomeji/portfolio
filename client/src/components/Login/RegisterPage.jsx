@@ -8,7 +8,7 @@ import styled from 'styled-components';
 export default function RegisterPage() {
  
     const navigate = useNavigate();
-    const { registerfetch } = useStore();
+    const { registerfetch,isEnglishMode } = useStore();
 
     const [userID , setUserID] = useState('');
     const [email, setEmail] = useState('');
@@ -79,20 +79,20 @@ export default function RegisterPage() {
   return (
       <div>
           <StyledRegister onSubmit={onSubmitHandler}>
-              <StyledForm>
-              <h1>Sign Up</h1>
-              <span>ID  </span>
-              <StyledInput  onChange={e=> onIDHandler(e)} value={userID} type="text" />
-              <span>Email  </span>
-              <StyledInput  onChange={e=> onEmailHandler(e)} value={email} type="email" />
-              <span>Name  </span>
-              <StyledInput  onChange={e=> onNameHandler(e)} value={name} type="text" />
-              <span>Password  </span>
-              <StyledInput  onChange={e=> onPWHandler(e)} value={PW} type="password" />
-              <span>Confirm password  </span>
-              <StyledInput  onChange={e=> onPWCheckHandler(e)} value={PWCheck} type="password" />
-              <StyledButton type="submit">register</StyledButton>
-              </StyledForm>
+            <StyledForm>
+            <h1>{isEnglishMode ? 'Sign Up' : '회원가입' }</h1>
+            <span>{isEnglishMode ? 'ID' : '아이디' }  </span>
+            <StyledInput  onChange={e=> onIDHandler(e)} value={userID} type="text" />
+            <span>{isEnglishMode ? 'Email' : '이메일' }   </span>
+            <StyledInput  onChange={e=> onEmailHandler(e)} value={email} type="email" />
+            <span>{isEnglishMode ? 'Name' : '이름' }   </span>
+            <StyledInput  onChange={e=> onNameHandler(e)} value={name} type="text" />
+            <span>{isEnglishMode ? 'Password' : '비밀번호' }   </span>
+            <StyledInput  onChange={e=> onPWHandler(e)} value={PW} type="password" />
+            <span>{isEnglishMode ? 'Confirm Password' : '비밀번호 확인' }  </span>
+            <StyledInput  onChange={e=> onPWCheckHandler(e)} value={PWCheck} type="password" />
+            <StyledButton type="submit">{isEnglishMode ? 'Sign up' : '회원가입' }</StyledButton>
+            </StyledForm>
           </StyledRegister>
     </div>
   )

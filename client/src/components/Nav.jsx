@@ -9,11 +9,14 @@ import Logo from '../assets/logo.png';
 
 export default function Nav() {
      const navigate = useNavigate();
-    const { setLoginStatus, loginStatus, setAccessToken, isDarkMode, setIsDarkMode } = useStore()
+    const { setLoginStatus, loginStatus, setAccessToken, isDarkMode, setIsDarkMode, isEnglishMode, setIsEnglishMode } = useStore()
     
     const changeMode = () => { 
         setIsDarkMode(!isDarkMode)
-        console.log(isDarkMode)
+       
+    }
+    const changeLan = () => {
+        setIsEnglishMode(!isEnglishMode)
     }
       const logoutHandler =() =>{
     axios.get("/api/users/logout")
@@ -38,27 +41,33 @@ export default function Nav() {
         (<Frame>
       <LogoFrame>
       <img onClick={changeMode}  src={isDarkMode ? Logo : LogoWhite} alt="logo" />  
-      <h1>Portfolio</h1>
+      <h1>{isEnglishMode ? 'Portfolio' : '포트폴리오' }</h1>
       </LogoFrame>
         
-        <StyledLink to="/about">Activity</StyledLink>     
-        <StyledLink to="/board">Contact</StyledLink>    
-      Credit
-       <StyledButton onClick={logoutHandler}>LogOut</StyledButton> 
+        <StyledLink to="/about">{isEnglishMode? 'Projects' : '프로젝트' }</StyledLink>     
+        <StyledLink to="/board">{isEnglishMode? 'Contact' : '게시판' }</StyledLink>    
+                 {isEnglishMode? 'Credit' : '크레딧' }
+                  <span onClick={changeLan}>
+                  {isEnglishMode? '한/영' : 'En/KOR' }
+                  </span>
+       <StyledButton onClick={logoutHandler}>  {isEnglishMode? 'LogOut' : '로그아웃' }</StyledButton> 
       </Frame> )
         : (<Frame>
             <LogoFrame>
             <img onClick={changeMode}  src={isDarkMode ? Logo : LogoWhite} alt="logo" />  
-            <h1>Portfolio</h1>
+            <h1>{isEnglishMode ? 'Portfolio' : '포트폴리오' }</h1>
             </LogoFrame>
-            <StyledLink to="/about">Activity</StyledLink> 
-            <StyledLink  to="/board">Contact</StyledLink>  
-              Credit
+            <StyledLink to="/about">{isEnglishMode? 'Projects' : '프로젝트' }</StyledLink> 
+            <StyledLink  to="/board">{isEnglishMode? 'Contact' : '게시판' }</StyledLink>  
+                 {isEnglishMode? 'Credit' : '크레딧' }
+                  <span onClick={changeLan}>
+                 {isEnglishMode? '한/영' : 'En/KOR' }
+                  </span>
                   <div>
-
-            <StyledLink to="/login">Sign In</StyledLink>/  
+                
+            <StyledLink to="/login">{isEnglishMode? 'Sign In' : '로그인' }</StyledLink>/  
                  
-            <StyledLink to="/register">Sign Up</StyledLink>
+            <StyledLink to="/register">{isEnglishMode? 'Sign Up' : '회원가입' }</StyledLink>
             </div>
      </Frame>) }    
       </div>

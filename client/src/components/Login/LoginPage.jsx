@@ -14,7 +14,7 @@ export default function LoginPage() {
     
 
     //
-    const { loginfetch,loginStatus,setLoginStatus,setAccessToken} = useStore();
+    const { loginfetch,loginStatus,setLoginStatus,setAccessToken,isEnglishMode} = useStore();
    
     //prevent default submit
     const onUseridHandler = (e) => { 
@@ -59,8 +59,9 @@ export default function LoginPage() {
         <StyledImageContainer>
     <img src={Logo} alt="logo" />  
       </StyledImageContainer>
-      <p>
-      Sign in to Geo's Portfolio
+        <p>
+        {isEnglishMode ? "Sign in to Geo's Portfolio" : '로그인'}          
+      
       </p>
     </StyledIntroduction>   
 
@@ -76,8 +77,8 @@ export default function LoginPage() {
         </div>
               
         <div>
-        <StyledButton type='submit'>Sign In</StyledButton>          
-        <StyledButton><StyledLink to="/register"> Sign Up</StyledLink></StyledButton>          
+        <StyledButton type='submit'> {isEnglishMode ? "Sign in" : '로그인'}   </StyledButton>          
+        <StyledButton><StyledLink to="/register">{isEnglishMode ? "Sign up" : '회원가입'}</StyledLink></StyledButton>          
         </div>
         </StyledForm>
           
