@@ -5,8 +5,8 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Link, Routes, Route, Outlet } from "react-router-dom";
 import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
-import LogoWhite from '../assets/logoWhite.png';
-import Logo from '../assets/logo.png';
+import LogoWhite from '../assets/LogoWhite.png';
+import Logo from '../assets/Logo.png';
 
 export default function Nav() {
      const navigate = useNavigate();
