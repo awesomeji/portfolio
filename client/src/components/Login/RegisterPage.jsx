@@ -1,8 +1,6 @@
-import React from 'react'
-import { useState} from 'react' 
-import useStore from '../../store/store'
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+import React from 'react';
+import { useState } from 'react';
+import useStore from '../../store/store';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 

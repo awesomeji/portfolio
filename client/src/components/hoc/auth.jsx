@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import useStore from '../../store/store';
-import {useEffect} from 'react'
-import axios from '../../plugins/axios'
+import { useEffect } from 'react';
+
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 

@@ -1,15 +1,15 @@
-import React from 'react'
-import {Route,Routes} from 'react-router-dom'
-import About from './components/About'
-import Login from './components/Login/LoginPage'
-import Register from './components/Login/RegisterPage'
-import Contact from './components/Board/Contact'
-import Auth from './components/hoc/auth'
-import Write from './components/Board/WritePage'
-import Nav from './components/Nav'
-import Notion from './components/Notion/Notion'
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import About from './components/About';
+import Login from './components/Login/LoginPage';
+import Register from './components/Login/RegisterPage';
+import Contact from './components/Board/Contact';
+import Auth from './components/hoc/auth';
+import Write from './components/Board/WritePage';
+import Nav from './components/Nav';
+import Notion from './components/Notion/Notion';
 import styled, { ThemeProvider } from 'styled-components';
-import useStore from './store/store'
+import useStore from './store/store';
 
 
 

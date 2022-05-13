@@ -1,10 +1,10 @@
-import React from 'react'
-import { useState,useEffect } from 'react' 
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { NotionRenderer } from 'react-notion'
 import 'prismjs/themes/prism-tomorrow.css'; // only needed for code highlighting
 import 'react-notion/src/styles.css';
-import styled,{ ThemeProvider} from 'styled-components'
-import { Link } from 'react-router-dom'
+import styled, { ThemeProvider } from 'styled-components';
+import { Link } from 'react-router-dom';
 import useStore from '../store/store';
 
 

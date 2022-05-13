@@ -1,5 +1,4 @@
-import React from 'react'
-import Styled from 'styled-components';
+import React from 'react';
 import { useState } from 'react';
 import useStore from '../../store/store';
 import axios from '../../plugins/axios';

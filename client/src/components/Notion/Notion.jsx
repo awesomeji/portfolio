@@ -1,8 +1,8 @@
 import React from 'react';
 import {useState,useEffect} from 'react';
 import { NotionRenderer } from "react-notion";
-import {useParams} from 'react-router-dom'
-import styled, { ThemeProvider } from 'styled-components'
+import { useParams } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
 import useStore from '../../store/store';
 
 

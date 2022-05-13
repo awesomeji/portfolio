@@ -1,6 +1,6 @@
-import React from 'react'
-import axios from '../plugins/axios'
-import useStore from '../store/store'
+import React from 'react';
+import axios from '../plugins/axios';
+import useStore from '../store/store';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Link, Routes, Route, Outlet } from "react-router-dom";
 import styled from 'styled-components';

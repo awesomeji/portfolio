@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from '../../plugins/axios';
 import useStore from '../../store/store';
