@@ -1,11 +1,10 @@
 import React from 'react';
 import useStore from '../../store/store';
 import { useEffect } from 'react';
-
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 
-
+//주석더하기
 export default function (SpecificComponent, option, adminRoute = null) {
 
     const {auth,accessToken,setAccessToken,setLoginStatus,setUserInfo,userInfo}= useStore();
