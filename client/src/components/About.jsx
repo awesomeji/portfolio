@@ -95,7 +95,7 @@ const Articleboard = styled.div`
     flex-wrap : wrap;
     align-items : center;
     width: 60%;
-    margin : 0 0 0 12%;
+    margin : auto;
     justify-content: flex-start;
     
 
