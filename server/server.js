@@ -36,9 +36,7 @@ mongoose.connect(MONGO_URI
 // 패스포트 모듈 설정
 require('./middleware/passport')(passport);
 
-app.use('/', (res, req) => { 
-    res.send('Hello World');
-})
+
 
 
 // 라우팅 파트
