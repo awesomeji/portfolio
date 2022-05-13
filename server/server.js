@@ -23,7 +23,7 @@ app.use(cookieparser());
 
 require('dotenv').config(); //.env file is should be in root directory
 const { PORT, MONGO_URI } = process.env;
-const port = PORT || 5000;
+const port = process.env.PORT || 5000;
 
 
 

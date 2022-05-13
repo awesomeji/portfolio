@@ -67,12 +67,12 @@ export default function LoginPage() {
 
       <StyledForm onSubmit={e => onSubmitHandler(e)}>
         <div >
-        <label htmlFor="userID">ID : </label>
+        <label htmlFor="userID">{isEnglishMode ? "ID :" : '아이디 :'}     </label>
         <StyledInput type="text" id='userID' name='userID' value={userID} onChange={e=>onUseridHandler(e)}  />
         </div>
                 
         <div>
-        <label htmlFor="password">PW : </label>
+        <label htmlFor="password">{isEnglishMode ? "PW :" : '암호 :'}  </label>
         <StyledInput  type="password" id='password' name='password' value={password} onChange={e=>onPasswordHandler(e)}  />    
         </div>
               
@@ -89,13 +89,14 @@ export default function LoginPage() {
 
 const StyledLogin = styled.div`
 padding: 1rem;
-border : 1px solid #F5F5F5;
+
 width : 50%;
 min-height : 30rem;
 margin : 7rem auto;
 border-radius : 1.5rem;
 font-family: 'Orbitron', sans-serif;
-background-color : #F5F5F5;
+background-color :#E8E8E8;
+
 `;
 const StyledIntroduction = styled.div`
 align-items : center;

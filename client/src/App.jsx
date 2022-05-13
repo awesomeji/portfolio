@@ -9,11 +9,13 @@ import Write from './components/Board/WritePage'
 import Nav from './components/Nav'
 import Notion from './components/Notion/Notion'
 import styled, { ThemeProvider } from 'styled-components';
+import useStore from './store/store'
 
 
 
 
 function App() {
+    const {isDarkMode,inDarkMode,inLightMode} = useStore();
 
  
     const AuthAbout = Auth(About, null);
@@ -23,7 +25,8 @@ function App() {
     const AuthRegister = Auth(Register, false);
     const AuthWrite = Auth(Write, true);
     return (
-        <>
+        <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
+        <Theme style={{height :'inherit'}}>
            
         <Nav></Nav>
         <Routes >
@@ -36,8 +39,8 @@ function App() {
         <Route path='/notion/:slug' element={<AuthNotion />} />
         </Routes>
       
-        </>
-        
+        </Theme>
+        </ThemeProvider>
     )
 }
 
@@ -45,3 +48,7 @@ function App() {
 
 export default App
 
+const Theme = styled.div`
+background-color: ${props => props.theme.backgroundColor};
+
+`

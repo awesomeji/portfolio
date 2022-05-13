@@ -4,12 +4,22 @@ import useStore from '../store/store'
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { Link, Routes, Route, Outlet } from "react-router-dom";
 import styled from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import LogoWhite from '../assets/logoWhite.png';
 import Logo from '../assets/logo.png';
 
 export default function Nav() {
      const navigate = useNavigate();
-    const { setLoginStatus, loginStatus, setAccessToken, isDarkMode, setIsDarkMode, isEnglishMode, setIsEnglishMode } = useStore()
+const { setLoginStatus,
+        loginStatus,
+        setAccessToken,
+        isDarkMode,
+        inDarkMode,
+        inLightMode,
+        setIsDarkMode,
+        isEnglishMode,
+        setIsEnglishMode
+        } = useStore()
     
     const changeMode = () => { 
         setIsDarkMode(!isDarkMode)
@@ -37,6 +47,8 @@ export default function Nav() {
 
   return (
       <div style={{ position: 'relative', zIndex: '1' }}>
+          <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode } >
+
     {loginStatus ? 
         (<Frame>
       <LogoFrame>
@@ -70,6 +82,7 @@ export default function Nav() {
             <StyledLink to="/register">{isEnglishMode? 'Sign Up' : '회원가입' }</StyledLink>
             </div>
      </Frame>) }    
+            </ThemeProvider>
       </div>
   )
 }
@@ -81,7 +94,7 @@ height : 6rem;
 display : flex;
 background-color : #1a1a1a;
 color :#d1cfcf ;
-box-shadow:0px 10px 5px #565050;
+box-shadow:${props => props.theme.navShadow};
 
 justify-content : space-around;
 

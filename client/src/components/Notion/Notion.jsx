@@ -13,14 +13,16 @@ import "prismjs/themes/prism-tomorrow.css";
 
 
 export default function Notion() {
-    const {isDarkMode,inDarkMode,inLightMode} = useStore();
+    const {isDarkMode,inDarkMode,inLightMode,isEnglishMode} = useStore();
 
     const { slug } = useParams()
     const [blockMap, setBlockMap] = useState({})
 
      const notionSlugToId = async (slug)=> { 
-        const NOTION_TABLE_ID = 'e0d1a00fc0cd4590afb5704f59bc72df';
-        const database = await fetch(`https://notion-api.splitbee.io/v1/table/${NOTION_TABLE_ID}`).then(res =>res.json())
+         const NOTION_TABLE_ID = 'e0d1a00fc0cd4590afb5704f59bc72df';
+         const NOTION_TABLE_ID_KR = 'a8442bd75a054f288b13d9cf6414bfd9'
+         
+        const database = await fetch(`https://notion-api.splitbee.io/v1/table/${isEnglishMode ? NOTION_TABLE_ID : NOTION_TABLE_ID_KR}`).then(res =>res.json())
                        
            try {
         const notion = database.filter(notion => notion.slug === slug).pop();
@@ -32,16 +34,16 @@ export default function Notion() {
 
     useEffect(async () => { 
         const notionId = await notionSlugToId(slug)
-        console.log(notionId)
+      
 
         
         const notionData = await fetch(`https://notion-api.splitbee.io/v1/page/${notionId}`).then(res => res.json())
         setBlockMap(notionData)
-        console.log(notionData)
+        
 
         // fetch(`https://notion-api.splitbee.io/v1/page/${id}`)
         // .then(res => console.log(res))
-    },[])
+    },[isEnglishMode])
   return (
       <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
     <MainFrame>

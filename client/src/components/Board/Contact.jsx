@@ -5,6 +5,7 @@ import useStore from '../../store/store';
 import { Link } from 'react-router-dom';
 import Styled from 'styled-components';
 import { ThemeProvider} from 'styled-components'
+import { inherits } from 'util';
 
 export default function ContactMe() {
     const { loginStatus,isDarkMode,inDarkMode,inLightMode} = useStore();
@@ -89,11 +90,11 @@ export default function ContactMe() {
     //여기선 인덱싱 없이가고 보일러플레이트로 올릴때는 뒤에서 다 끌고와서 앞에서 짜르도록하자
     
     return (
-        <>
+        <div >
             {loginStatus ? (
                 <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
                 <StyledFrame>
-                    <p> any kind of feedback, suggestions or crirtics are welcome. leave your contact in message, I will call you as soon as possible</p>
+                    <p> any kind of feedback, suggestions or crirtics are welcome.<br/> leave your contact in message, I will call you as soon as possible</p>
                   
                 <StyledTable>
                         <colgroup>
@@ -170,14 +171,15 @@ export default function ContactMe() {
                 </ThemeProvider>
             ) : (<></>)}
      
-      </>
+      </div>
       
   )
 }
 
 const StyledFrame = Styled.div`
-    font-family: 'Orbitron', sans-serif;
-    font-family: 'Noto Sans KR', sans-serif;
+    /* font-family: 'Orbitron', sans-serif; */
+    font-family: 'Gowun Dodum', sans-serif;
+    
    background-color: ${props => props.theme.backgroundColor};
     color : ${props => props.theme.color};
         caret-color : ${props => props.theme.color};
@@ -188,10 +190,12 @@ const StyledFrame = Styled.div`
     width:100%;
     height:90%;
     margin :  auto;
+    /* padding : 150px 0 0 0; */
 
-    /* p{
-        color :${props => props.theme.color};
-    } */
+    p{
+         font-family: 'Orbitron', sans-serif;
+        font-size:2rem;
+    }
 `
 const StyledTable = Styled.table`
     width : 70%;
@@ -220,6 +224,8 @@ const StyledTable = Styled.table`
     }
     tbody{
         border : ${props => props.theme.greenLine};
+        font-size : 1.2rem;
+        font-weight : 800;
     }
     tbody tr{
         height :40px;

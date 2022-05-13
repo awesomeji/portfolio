@@ -46,8 +46,9 @@ export default function About() {
         setMainArticle(resJson);
       });
           
-       const NOTION_TABLE_ID = 'e0d1a00fc0cd4590afb5704f59bc72df';
-        fetch(`https://notion-api.splitbee.io/v1/table/${NOTION_TABLE_ID}`)
+        const NOTION_TABLE_ID = 'e0d1a00fc0cd4590afb5704f59bc72df';
+        const NOTION_TABLE_ID_KR = 'a8442bd75a054f288b13d9cf6414bfd9'
+        fetch(`https://notion-api.splitbee.io/v1/table/${isEnglishMode ? NOTION_TABLE_ID : NOTION_TABLE_ID_KR}`)
       .then(res =>res.json())
             .then((resJson) => {
           console.log(resJson)
@@ -92,7 +93,7 @@ const Articleboard = styled.div`
     flex-wrap : wrap;
     align-items : center;
     width: 60%;
-    margin : 0 0 0 0;
+    margin : 0 0 0 12%;
     justify-content: flex-start;
     
 
@@ -107,9 +108,9 @@ a{
     text-decoration : none !important;
     color :${props => props.theme.color};
    
-}
-&:hover{
-    color :rgb(56, 116, 37) !important;
+    &:hover{
+        color :${props => props.theme.articleHoverCL};
+    }
 }
 padding: 12px;
 margin: 20px 25px;

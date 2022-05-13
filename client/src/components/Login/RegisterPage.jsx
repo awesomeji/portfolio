@@ -98,24 +98,24 @@ export default function RegisterPage() {
   )
 }
 const StyledRegister = styled.div`
-padding: 1rem;
-border : 3px solid #F5F5F5;
-width : 50%;
-min-height : 30rem;
+
+/* border : 3px solid #F5F5F5; */
+width : 40%;
+min-height : 33rem;
 margin : 7rem auto;
 border-radius : 1.5rem;
 font-family: 'Orbitron', sans-serif;
 `;
 
 const StyledForm = styled.form`
-margin : 2rem auto;
-height : 38rem;
+margin : 1rem auto;
+height : 37rem;
 align-items : center;
 display : flex;
 flex-direction : column;
 justify-content : space-around;
 background-color : #000000;
-width : 80%;
+width : 70%;
 color : white;
 border-radius : 1rem;
 
