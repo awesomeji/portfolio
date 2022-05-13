@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+// http://geo-works.herokuapp.com/
+
 const instance = axios.create({
-    baseURL: 'http://localhost:5000/',
+    baseURL: process.env.BASE_URL || 'http://localhost:5000/',
     withCredentials: true,
 
     //for send http only cookie
