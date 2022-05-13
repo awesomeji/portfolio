@@ -54,7 +54,9 @@ module.exports = custom => {
                     
                 })
                 jwt.sign(Payload, JWT_ACCESS_SECRET, { expiresIn: JWT_ACCESS_EXPIRATION_TIME }, (err, accessToken) => {
-                    
+                    if (err) { 
+                        console.log(err)
+                    }
                     
                     userInfo.accessToken = 'Bearer ' +  accessToken
                     

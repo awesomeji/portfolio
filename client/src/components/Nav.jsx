@@ -88,84 +88,52 @@ const { setLoginStatus,
 }
 
 const Frame = styled.div`
-
 height : 6rem;
-
 display : flex;
-background-color : #1a1a1a;
-color :#d1cfcf ;
+background-color : ${props => props.theme.backgroundColorNV};
+color : ${props => props.theme.colorCT};
 box-shadow:${props => props.theme.navShadow};
-
 justify-content : space-around;
-
 align-items : center;
-
 font-size : 1.5rem;
-
 font-family: 'Gugi', cursive;
-
 `;
 
 //align-items : center flex상태에서 위로 몰린 텍스트 중앙을 정렬*
 
 const LogoFrame = styled.div`
-
 display:flex;
-
 font-size :1rem;
-
 font-style : italic;
 img{
     border-radius : 10%;
-    box-shadow:0px 5px 5px #cbc4c433;
+    /* box-shadow:0px 5px 5px #cbc4c433; */
     margin: 0 0.5rem;
 }
-
 `;
 
 const StyledLink = styled(Link)`
-
 text-decoration : none;
-
-color :#d1cfcf ;
-
+color :${props => props.theme.colorCT};
 &:hover{
-
 color :#C4E8CA;
-
 }
-
 `
 
 const StyledButton = styled.button`
-
 font-size : 1.5rem;
-
 font-family: 'Gugi', cursive;
-
 margin : 0 1rem;
-
 min-width : 4rem;
-
 min-height : 2rem;
-
 background: none;
-
 border : none;
-
 cursor : pointer;
-
-color : #d1cfcf ;
-
-background-color : #1a1a1a;
-
+color : ${props => props.theme.colorCT};
+background-color :  ${props => props.theme.backgroundColorNV};
 border-radius : 0.5rem;
-
 &:hover{
-
 color :#C4E8CA;
-
 }
-
 `;
 

@@ -13,17 +13,24 @@ const store = (set) => ({
     },
     inDarkMode: {
         color: '#d1cfcf !important',
+        colorCT: '#d1cfcf !important',
         backgroundColor: '#1a1a1a !important',
-        backgroundColorWithOP: 'rgba(196, 232, 202,0.2) !important',
+        backgroundColorNV: '#1a1a1a !important',
         greenLine: ' 2px solid rgb(56, 116, 37);',
+        table: ' rgb(58, 160, 27)',
+        tr : 'rgb(56, 116, 37);',
         articleBG: 'rgba(255,255,255,0.1);',
         articleHoverCL: 'rgb(56, 116, 37) !important;',
         navShadow:'0px 5px 5px rgb(56, 116, 37)'
     },
     inLightMode: {
         color: '#37352F !important',
+        colorCT: '#000000 !important',
         backgroundColor: '#E8E8E8 !important',
+        backgroundColorNV: '#057214 !important',
         greenLine: ' 2px solid black',
+        table: '#E8E8E8',
+        tr : '#f2f2f2;',
         articleBG: '#dcdcdc;',
         articleHoverCL: 'white !important;',
         navShadow : '0px 10px 5px #565050;'

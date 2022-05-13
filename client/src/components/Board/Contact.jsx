@@ -93,8 +93,9 @@ export default function ContactMe() {
         <div >
             {loginStatus ? (
                 <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
-                <StyledFrame>
-                    <p> any kind of feedback, suggestions or crirtics are welcome.<br/> leave your contact in message, I will call you as soon as possible</p>
+                    <StyledFrame>
+                        <div className='p'>Any kind of feedback, suggestions or crirtics are welcome. <br /> Leave your contact in message, I will call you as soon as possible</div>
+                    
                   
                 <StyledTable>
                         <colgroup>
@@ -192,16 +193,20 @@ const StyledFrame = Styled.div`
     margin :  auto;
     /* padding : 150px 0 0 0; */
 
-    p{
+    .p{
          font-family: 'Orbitron', sans-serif;
         font-size:2rem;
-    }
+        height:200px;
+        width : 50%;
+        /* padding : 20px 0 0 0; */
+        margin : 40px 0 10px 0; 
+    }   
 `
 const StyledTable = Styled.table`
     width : 70%;
     text-align : center;
     border : ${props => props.theme.greenLine};
-    
+    borer-radius : 50px;
     
     border-collapse: collapse;
     thead{
@@ -210,7 +215,7 @@ const StyledTable = Styled.table`
             height : 45px;
         }
         th{
-            color : #0F9B05;
+            color : ${props => props.theme.table};
              span:hover{
         color : white;
         }
@@ -231,7 +236,7 @@ const StyledTable = Styled.table`
         height :40px;
     }
     tbody tr:nth-child(odd){
-        background-color : #f2f2f2;
+        background-color :  ${props => props.theme.tr};
 
     }
 `
