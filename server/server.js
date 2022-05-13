@@ -16,7 +16,8 @@ app.use(passport.initialize());
 
 app.use(cookieparser());
 
-
+//for build
+const path = require('path');
 
 //2way to control enviroment variables
 // const config = require('./config/key');
@@ -44,7 +45,17 @@ app.use('/api/users', users);
 app.use('/api/board', board);
 
 
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
 
+  // Set static folder
+  app.use(express.static("client/dist"));
+
+  // index.html for all page routes
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, '..',"client", "dist", "index.html"));
+  });
+}
 
 app.listen(port,() => console.log('This app listening at http://localhost:' + port));
 
