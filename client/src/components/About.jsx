@@ -57,8 +57,7 @@ export default function About() {
       });     
   }, [isEnglishMode])
     return (
-        <>
-        {isLoading ? (<div>Loading...</div>) :( <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
+        <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
     <MainFrame>
     <MainArticle>
     <NotionRenderer 
@@ -85,8 +84,7 @@ export default function About() {
         )}
                 </Articleboard>
       </MainFrame>
-        </ThemeProvider>)}
-        </>
+        </ThemeProvider>
        
   )
 }
