@@ -32,7 +32,7 @@ export function Article(props) {
 
 export default function About() {
 
-    const {isDarkMode,inDarkMode,inLightMode,isEnglishMode} = useStore();
+    const {isDarkMode,inDarkMode,inLightMode,isEnglishMode,isLoading,setIsLoading} = useStore();
     const [mainArticle, setMainArticle] = useState({})
     const [ArticleList, setArticleList] = useState([])
 
@@ -52,11 +52,13 @@ export default function About() {
       .then(res =>res.json())
             .then((resJson) => {
           console.log(resJson)
-        setArticleList(resJson);
+                setArticleList(resJson);
+                setIsLoading(false)
       });     
   }, [isEnglishMode])
     return (
-        <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
+        <>
+        {isLoading ? (<Loading>Loading...</Loading>) :( <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
     <MainFrame>
     <MainArticle>
     <NotionRenderer 
@@ -77,13 +79,15 @@ export default function About() {
             key={index}
             ></Article>
             
-          
+            
             )
         } 
         )}
                 </Articleboard>
       </MainFrame>
-        </ThemeProvider>
+        </ThemeProvider>)}
+        </>
+       
   )
 }
 

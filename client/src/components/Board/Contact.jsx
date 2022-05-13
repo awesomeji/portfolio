@@ -8,7 +8,7 @@ import { ThemeProvider} from 'styled-components'
 import { inherits } from 'util';
 
 export default function ContactMe() {
-    const { loginStatus,isDarkMode,inDarkMode,inLightMode} = useStore();
+    const { loginStatus,isDarkMode,inDarkMode,inLightMode,isLoading,setIsLoading} = useStore();
     const [totalPage, setTotalPage] = useState(0);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
@@ -21,7 +21,7 @@ export default function ContactMe() {
     const [searchOptionB, setSearchOptionB] = useState('');
     const [searchOptions, setSearchOptions] = useState([]);
 
-
+    
 
 
     useEffect(() => { 
@@ -35,6 +35,7 @@ export default function ContactMe() {
             searchOptionB: searchOptions[1],
             sortByIdx: sortByIdx
         }
+      
         axios.get('/api/board/list',{params:request})
             .then(res => { 
                 console.log(res)
@@ -46,6 +47,10 @@ export default function ContactMe() {
                     setData(res.data.posts);
                     setTotalPage(res.data.totalPage);
                     setTotal(res.data.total);
+                    if(!isLoading){
+                        setIsLoading(true)
+                    }
+                    
                 }
                 
             })
@@ -90,7 +95,9 @@ export default function ContactMe() {
     //여기선 인덱싱 없이가고 보일러플레이트로 올릴때는 뒤에서 다 끌고와서 앞에서 짜르도록하자
     
     return (
+     
         <div >
+         
             {loginStatus ? (
                 <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
                     <StyledFrame>

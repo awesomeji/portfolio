@@ -4,6 +4,8 @@ import {devtools} from 'zustand/middleware'
 import axios from '../plugins/axios';
 
 const store = (set) => ({
+    isLoading: true,
+    setIsLoading : (isLoading) => set(state => ({...state, isLoading})),
     isDarkMode: true,
     setIsDarkMode: (isDarkMode) => set(state => ({...state, isDarkMode})),
     userInfo: {
