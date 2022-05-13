@@ -1,4 +1,5 @@
-import { React, useState } from 'react'
+import React from 'react'
+import { useState} from 'react' 
 import useStore from '../../store/store'
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
