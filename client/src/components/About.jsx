@@ -53,7 +53,7 @@ export default function About() {
             .then((resJson) => {
           console.log(resJson)
                 setArticleList(resJson);
-                setIsLoading(false)
+               
       });     
   }, [isEnglishMode])
     return (
