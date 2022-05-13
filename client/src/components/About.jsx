@@ -58,7 +58,7 @@ export default function About() {
   }, [isEnglishMode])
     return (
         <>
-        {isLoading ? (<Loading>Loading...</Loading>) :( <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
+        {isLoading ? (<div>Loading...</div>) :( <ThemeProvider theme={isDarkMode? inDarkMode : inLightMode }>
     <MainFrame>
     <MainArticle>
     <NotionRenderer 
