@@ -3,7 +3,7 @@ import React from 'react'
 import { useState} from 'react';
 import useStore from '../../store/store';
 import styled from 'styled-components';
-import Logo from '../../assets/logo.png';
+import Logo from '../../assets/Logo.png';
 import { Link, Routes, Route, Outlet } from "react-router-dom";
 
 export default function LoginPage() {
