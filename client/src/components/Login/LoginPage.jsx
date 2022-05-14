@@ -92,7 +92,9 @@ padding: 1rem;
 
 width : 50%;
 min-height : 30rem;
-margin : 7rem auto;
+margin : auto;
+position:relative;
+top:250px;
 border-radius : 1.5rem;
 font-family: 'Orbitron', sans-serif;
 background-color :#E8E8E8;

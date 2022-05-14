@@ -97,6 +97,9 @@ justify-content : space-around;
 align-items : center;
 font-size : 1.5rem;
 font-family: 'Gugi', cursive;
+width : 100%;
+position : fixed;
+top : 0;
 `;
 
 //align-items : center flex상태에서 위로 몰린 텍스트 중앙을 정렬*

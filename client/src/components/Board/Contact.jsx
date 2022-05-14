@@ -195,8 +195,11 @@ const StyledFrame = Styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
+    
     width:100%;
-    height:90%;
+    position:relative;
+    top:100px;
+   
     margin :  auto;
     /* padding : 150px 0 0 0; */
 

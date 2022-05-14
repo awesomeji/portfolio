@@ -76,7 +76,7 @@ export default function RegisterPage() {
             })
     }
   return (
-      <div>
+   
           <StyledRegister onSubmit={onSubmitHandler}>
             <StyledForm>
             <h1>{isEnglishMode ? 'Sign Up' : '회원가입' }</h1>
@@ -93,15 +93,18 @@ export default function RegisterPage() {
             <StyledButton type="submit">{isEnglishMode ? 'Sign up' : '회원가입' }</StyledButton>
             </StyledForm>
           </StyledRegister>
-    </div>
+
   )
 }
 const StyledRegister = styled.div`
 
 /* border : 3px solid #F5F5F5; */
 width : 40%;
-min-height : 33rem;
-margin : 7rem auto;
+min-height : 30rem;
+/* min-height : 30rem; */
+margin : 0 auto;
+position:relative;
+top:200px;
 border-radius : 1.5rem;
 font-family: 'Orbitron', sans-serif;
 `;
