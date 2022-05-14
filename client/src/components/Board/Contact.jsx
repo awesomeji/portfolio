@@ -8,7 +8,7 @@ import { ThemeProvider} from 'styled-components'
 import { inherits } from 'util';
 
 export default function ContactMe() {
-    const { loginStatus,isDarkMode,inDarkMode,inLightMode,isLoading,setIsLoading} = useStore();
+    const { loginStatus,isDarkMode,inDarkMode,inLightMode,isLoading,setIsLoading,isEnglishMode} = useStore();
     const [totalPage, setTotalPage] = useState(0);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(10);
@@ -101,7 +101,13 @@ export default function ContactMe() {
             {loginStatus ? (
                 <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
                     <StyledFrame>
-                        <div className='p'>Any kind of feedback, suggestions or crirtics are welcome. <br /> Leave your contact in message, I will call you as soon as possible</div>
+                        {isEnglishMode ? (
+                            
+                            <div className='p'> <br /> Any kind of feedback, suggestions or crirtics are welcome. <br /> Leave your contact in message, I will call you as soon as possible<br/> Only admin can read your message.</div>
+                            ) : (
+                            <div className='p'>제안 및 모든 여기에 남겨주세요. <br /> 답변받고싶은 연락처를 내용에 기재해주시면 빠른시일내에 연락드리겠습니다. <br /> 모든 내용은 관리자만 볼 수 있습니다.</div>
+                                
+                        )}
                     
                   
                 <StyledTable>
@@ -204,7 +210,7 @@ const StyledFrame = Styled.div`
     /* padding : 150px 0 0 0; */
 
     .p{
-         font-family: 'Orbitron', sans-serif;
+          font-family: 'Gowun Dodum', sans-serif;   
         font-size:2rem;
         height:200px;
         width : 50%;
