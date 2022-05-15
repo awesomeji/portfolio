@@ -31,7 +31,7 @@ function App() {
         <Nav></Nav>
         <Routes >
         <Route path='*' element={  <AuthAbout />} />
-        <Route path='/about' element={   <AuthAbout />} />
+        <Route path='/about:id' element={   <AuthAbout />} />
         <Route path='/login' element={ <AuthLogin />} />
         <Route path='/board' element={ <AuthContact />} />
         <Route path='/register' element={ <AuthRegister />} />
