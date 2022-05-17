@@ -4,6 +4,7 @@ import { NotionRenderer } from "react-notion";
 import { useParams } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import useStore from '../../store/store';
+import {Link} from 'react-router-dom';
 
 
 import "react-notion/src/styles.css";
@@ -46,12 +47,18 @@ export default function Notion() {
     },[isEnglishMode])
   return (
       <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
+          <BackToMain>
+                <StyledLink to="/about">←Back to Main</StyledLink>
+          </BackToMain>
     <MainFrame>
           <NotionRenderer
             fullPage={true}
             blockMap={blockMap}
               />
-    </MainFrame>
+          </MainFrame>
+           <GoToSuggestion>
+                <StyledLink to="/board">go to suggestion</StyledLink>
+          </GoToSuggestion>
     </ThemeProvider>
   )
 }
@@ -72,5 +79,35 @@ min-height: 100vh;
     }
     .notion-nav-title{
        color : ${props => props.theme.color};
+    }
+`
+const BackToMain = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20%;
+    margin :18% auto;
+    height: 100vh;
+  `
+const GoToSuggestion = styled.div`
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20%;
+    margin :18% auto;
+    height: 100vh;
+  
+`
+
+const StyledLink = styled(Link)`
+    font-family: 'Orbitron', sans-serif;
+    /* font-size: 1.5rem; */
+     font-weight : 600;
+    text-decoration: none;
+    padding: 50% 0 0 10%;
+    color: ${props => props.theme.color};
+    &:hover{
+    color:${props => props.theme.articleHoverCL};
+    text-decoration: underline;
     }
 `
