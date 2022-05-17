@@ -103,7 +103,7 @@ export default function ContactMe() {
                     <StyledFrame>
                         {isEnglishMode ? (
                             
-                            <div className='p'> <br /> Any kind of feedback, suggestions or crirtics are welcome. <br /> Leave your contact in message, I will call you as soon as possible<br/> Only admin can read your message.</div>
+                            <div className='p'>Any kind of feedback, suggestions or crirtics are welcome. <br /> Leave your contact in message, I will call you as soon as possible<br/> Only admin can read your message.</div>
                             ) : (
                             <div className='p'>제안 및 모든 여기에 남겨주세요. <br /> 답변받고싶은 연락처를 내용에 기재해주시면 빠른시일내에 연락드리겠습니다. <br /> 모든 내용은 관리자만 볼 수 있습니다.</div>
                                 
