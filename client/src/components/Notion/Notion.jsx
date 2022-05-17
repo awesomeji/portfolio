@@ -48,7 +48,7 @@ export default function Notion() {
   return (
       <ThemeProvider theme={isDarkMode ? inDarkMode : inLightMode}>
           <BackToMain>
-                <StyledLink to="/about">←Back to Main</StyledLink>
+                <StyledLink to="/about">←Back To Main</StyledLink>
           </BackToMain>
     <MainFrame>
           <NotionRenderer
@@ -57,7 +57,7 @@ export default function Notion() {
               />
           </MainFrame>
            <GoToSuggestion>
-                <StyledLink to="/board">go to suggestion</StyledLink>
+                <StyledLink to="/board">go To suggestion</StyledLink>
           </GoToSuggestion>
     </ThemeProvider>
   )
