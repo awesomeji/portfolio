@@ -57,7 +57,7 @@ export default function Notion() {
               />
           </MainFrame>
           <GoToSuggestion>
-              test 
+              
                 <StyledLink to="/board">go To suggestion</StyledLink>
           </GoToSuggestion>
     </ThemeProvider>
