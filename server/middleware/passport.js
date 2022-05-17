@@ -33,7 +33,6 @@ module.exports = custom => {
         if (isRefreshValid) {
          // if it is , then re-issue access token by ID from refresh token
         // and re-issue refresh token too for secure reason
-            console.log(isRefreshValid)
             User.findById({ _id: isRefreshValid.id }, (err, user) => {
                 if (err) {
                     console.log(err)
@@ -76,7 +75,6 @@ module.exports = custom => {
             User.findById(isAccessValid.id)
                 .then(user => {
                     if (user) {
-                        console.log('user : ' + user)
                         return done(null, user)
                     }
                 })

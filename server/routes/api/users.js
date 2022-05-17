@@ -22,7 +22,6 @@ router.get('/auth', passport.authenticate('custom', { session: false }), (req, r
       });
     }
     if (req.user.refreshToken ) { 
-        console.log('req.user.refreshToken : '+ req.user.refreshToken)
         res.cookie('refreshToken', req.user.refreshToken, { httpOnly: true })
     }
     res.json({
