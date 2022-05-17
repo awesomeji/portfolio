@@ -56,7 +56,8 @@ export default function Notion() {
             blockMap={blockMap}
               />
           </MainFrame>
-           <GoToSuggestion>
+          <GoToSuggestion>
+              test 
                 <StyledLink to="/board">go To suggestion</StyledLink>
           </GoToSuggestion>
     </ThemeProvider>
