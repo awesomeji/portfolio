@@ -85,7 +85,7 @@ export default function About() {
                 <SideBar>
                     <ul>
                     <li>
-                            <a href="#section1" className='section1' onClick={e => setActiveColor(e)}>{isEnglishMode ? 'Self-introduction' : '자기소개'}</a>
+                            <a href="#section1" className='section1' onClick={e => setActiveColor(e)}>test{isEnglishMode ? 'Self-introduction' : '자기소개'}</a>
                     </li>
                         
                     <li>
